@@ -273,8 +273,8 @@ class Manage extends Controller {
 	 {
 	 	$this->session->set_userdata("section","materials");
 		$this->session->set_userdata("sub_section","materials");	
-		$sql ="select  * from user_views";
-		$data['content'] = $this->_page_query($sql,"manage/materials","material_list_1",$offset);
+		$sql ="select  * from materials";
+		$data['content'] = $this->_page_query($sql,"manage/materials","manage/material_list",$offset);
         $data['right'] = $this->load->view("manage/material_right",null,true);
 	    $this->template->load("main_theme","manage/manage_view",$data);
 	 }
@@ -289,20 +289,20 @@ class Manage extends Controller {
 	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
 		
 		$this->form_validation->set_rules('name', 'ชื่อวัสดีุ','trim|required');
-		$this->form_validation->set_rules('bland', '','trim');
+		$this->form_validation->set_rules('brand', '','trim');
 		$this->form_validation->set_rules('serial_code', '','trim');
-		$this->form_validation->set_rules('amount', '','trim|required');
-		$this->form_validation->set_rules('mcat_id', 'หมวด','trim');
+		$this->form_validation->set_rules('amount', '','trim');
+		$this->form_validation->set_rules('mcat_id', 'หมวด','trim|required');
 		$this->form_validation->set_rules('detail', 'รายละเอียด','trim');
 		$this->form_validation->set_rules('buyprice', 'วันที่ซื่อ','trim');
-		
-		$this->form_validation->set_rules('buydate', 'ชื่อผู้ใช้งาน','trim|required');
+				
+		$this->form_validation->set_rules('buydate', 'ชื่อผู้ใช้งาน','trim');
 	
 	
 		if ($this->form_validation->run() == FALSE)
 		{
 			
-			
+			$data['categories'] = $this->db->query("select  * from categories")->result_array();
 			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
 			$data['content'] = $this->load->view("manage/material_add",$data,true);
 			$data['right'] = $this->load->view("manage/material_right",null,true);
@@ -311,20 +311,86 @@ class Manage extends Controller {
 		}
 		else
 		{
+			$name = $_POST['name'];
+			$brand = $_POST['brand'];
+			$serial_code =  $_POST['serial_code'];
+			$amount =  $_POST['amount'];
+			$mcat_id =  $_POST['mcat_id'];
+			$detail = $_POST['detail'];
+			$buyprice  = $_POST['buyprice'];
+			$buydate = $_POST['buydate'];
 			
+			$sql = "insert into materials 
+			(name,brand,serial_code,amount,mcat_id,detail,buyprice,buydate,mtype_id) 
+			values ('$name','$brand','$serial_code','$amount','$mcat_id','$detail','$buyprice',STR_TO_DATE('$buydate','%d/%m/%Y'),1);";
 			$result = $this->db->query($sql);
 			if($result)
 			{
 				
 				
 				$this->session->set_userdata("message","บันทึกข้อมูลเรียบร้อย");
-				redirect('manage/users/', 'location');
+				redirect('manage/materials/', 'location');
 			}
 		}
 	 }
 	 function material_edit($id)
 	 {
-	 	
+	 
+	 	$this->session->set_userdata("section","materials");
+		$this->session->set_userdata("sub_section","material_add");	
+		
+		
+	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		$this->form_validation->set_rules('name', 'ชื่อวัสดีุ','trim|required');
+		$this->form_validation->set_rules('brand', '','trim');
+		$this->form_validation->set_rules('serial_code', '','trim');
+		$this->form_validation->set_rules('amount', '','trim');
+		$this->form_validation->set_rules('mcat_id', 'หมวด','trim|required');
+		$this->form_validation->set_rules('detail', 'รายละเอียด','trim');
+		$this->form_validation->set_rules('buyprice', 'วันที่ซื่อ','trim');
+		
+		$this->form_validation->set_rules('buydate', 'ชื่อผู้ใช้งาน','trim');
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			$sql = "select date_format(buydate,'%d/%m/%Y') as buydate,name,brand,serial_code,amount,mcat_id,detail,buyprice,mtype_id,m_id from materials where m_id = $id";
+			$data['rows'] = $this->db->query($sql)->result_array(); 
+			$data['categories'] = $this->db->query("select  * from categories")->result_array();
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			$data['content'] = $this->load->view("manage/material_edit",$data,true);
+			$data['right'] = $this->load->view("manage/material_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			$name = $_POST['name'];
+			$brand = $_POST['brand'];
+			$serial_code =  $_POST['serial_code'];
+			$amount =  $_POST['amount'];
+			$mcat_id =  $_POST['mcat_id'];
+			$detail = $_POST['detail'];
+			$buyprice  = $_POST['buyprice'];
+			$buydate = $_POST['buydate'];
+			
+			$sql = "update materials set 
+			name = '$name',brand='$brand',serial_code ='$serial_code',
+			amount ='$amount',mcat_id='$mcat_id',
+			detail='$detail',
+			buyprice='$buyprice'
+			,buydate =STR_TO_DATE('$buydate','%d/%m/%Y')
+			 where m_id  = $id";
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","บันทึกข้อมูลเรียบร้อย");
+				redirect('manage/materials/', 'location');
+			}
+		}
 	 }
 	 function material_delet($id)
 	 {

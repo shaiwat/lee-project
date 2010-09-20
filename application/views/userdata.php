@@ -1,5 +1,5 @@
 <div id="userdetail">
-      <div id="projectname">Grand U</div>
+      <div id="projectname"><?php echo $info[0]['role_tname']; ?></div>
       <div id="position"><?php echo $info[0]['position'] ?></div>
       <div id="name"><?php echo $info[0]['firstname']." ".$info[0]['lastname'] ?></div>
       <div class="clear"></div>
