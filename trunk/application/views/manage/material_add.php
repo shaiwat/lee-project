@@ -6,22 +6,22 @@
 <?php echo validation_errors('<div class="error-message" style="width:437px;">', ' </div>'); ?>
 <form id="myform" method="post" action="<?php echo site_url("manage/material_add"); ?>">
     <div class="field">ชื่อวัสดุ<br>
-         <input type="text"  name="name" value="<?php echo set_value('firstname'); ?>"  class="textfield">
+         <input type="text"  name="name" value="<?php echo set_value('name'); ?>"  class="textfield">
 	</div>
 	<div class="field">Serial Code<br>
-         <input type="text"  name="Serial_code" value="<?php echo set_value('firstname'); ?>"  class="textfield">
+         <input type="text"  name="serial_code" value="<?php echo set_value('serial_code'); ?>"  class="textfield">
 	</div>
     <div class="field">ยี้ห้อ<br>
-         <input type="text"  name="brand" value="<?php echo set_value('firstname'); ?>"  class="textfield">
+         <input type="text"  name="brand" value="<?php echo set_value('brand'); ?>"  class="textfield">
 	</div>
 	<div class="field">จำนวน<br>
-         <input type="text"  name="amount" value="<?php echo set_value('firstname'); ?>"  class="textfield">
+         <input type="text"  name="amount" value="<?php echo set_value('amount'); ?>"  class="textfield">
 	</div>
 	<div class="field">ราคาซื้อ<br>
-         <input type="text"  name="buyprice" value="<?php echo set_value('firstname'); ?>"  class="textfield">
+         <input type="text"  name="buyprice" value="<?php echo set_value('buyprice'); ?>"  class="textfield">
 	</div>
 	<div class="field">วันที่รับมา/ซื้อมา<br>
-         <input type="text"  name="get_date" value="<?php echo set_value('firstname'); ?>"  class="textfield">
+         <input type="text"  name="buydate" value="<?php echo set_value('buydate'); ?>"  class="textfield datepickek">
 	</div>
 	
 	<div class="field">หมวด<br>
@@ -37,7 +37,7 @@
 	
      <div style="clear:both;"></div>
 <div class="field2">สเปค/รายละเอียด<br>
-                  <textarea name="note" cols="" rows="" class="contentfield"></textarea>
+                  <textarea name="detail" cols="" rows="" class="contentfield"><?php echo set_value("detail"); ?></textarea>
                 </div>
    <div style="clear:both;"></div>
       <div class="field"><br>

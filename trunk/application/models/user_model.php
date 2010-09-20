@@ -26,7 +26,7 @@ class user_model extends Model {
         
     	$user =$this->session->userdata('user');
     	$data['user'] = $user;
-    	$data['info'] = $this->db->query("select * from user_login where user_id =".$user['user_id'])->result_array();
+    	$data['info'] = $this->db->query("select * from user_login u left join user_roles r on u.role_id  = r.role_id where u.user_id =".$user['user_id'])->result_array();
         return 	$this->load->view("userdata",$data,true);
     	
     	
