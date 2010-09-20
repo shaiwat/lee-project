@@ -289,12 +289,12 @@ class Manage extends Controller {
 	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
 		
 		$this->form_validation->set_rules('name', 'ชื่อวัสดีุ','trim|required');
-		$this->form_validation->set_rules('bland', '','trim|required');
-		$this->form_validation->set_rules('serial_code', '','trim|required');
+		$this->form_validation->set_rules('bland', '','trim');
+		$this->form_validation->set_rules('serial_code', '','trim');
 		$this->form_validation->set_rules('amount', '','trim|required');
-		$this->form_validation->set_rules('mcat_id', 'หมวด','trim|required');
-		$this->form_validation->set_rules('detail', 'รายละเอียด','trim|required');
-		$this->form_validation->set_rules('buyprice', 'วันที่ซื่อ','trim|required');
+		$this->form_validation->set_rules('mcat_id', 'หมวด','trim');
+		$this->form_validation->set_rules('detail', 'รายละเอียด','trim');
+		$this->form_validation->set_rules('buyprice', 'วันที่ซื่อ','trim');
 		
 		$this->form_validation->set_rules('buydate', 'ชื่อผู้ใช้งาน','trim|required');
 	
