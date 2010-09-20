@@ -1,0 +1,46 @@
+@charset "utf-8";
+/* CSS Document */
+
+.bold {
+font-weight: 700;
+}
+
+a {
+	color: #004098;
+	text-decoration: underline;
+}
+
+a:hover {
+	color: #004098;
+	text-decoration: none;
+}
+
+.browntext {
+	color: #966902;
+}
+
+a.brownlink  {
+	color: #966902;
+	text-decoration: underline;
+}
+
+a.brownlink:hover {
+	color: #09F;
+	text-decoration: underline;
+}
+
+.bluetext {
+	color: #0018FF;
+}
+
+.yellowtext {
+	color: #FF0;
+}
+
+.redtext {
+	color: #DC143C;
+}
+
+.pinktext {
+	color: #FF00B4;
+}
