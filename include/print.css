@@ -1,0 +1,155 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	margin: 15;
+	
+	background: #FFF;
+
+	font-size: 13px;
+	color: #000;
+}
+p
+{
+	margin: 0px;
+}
+
+
+#wrapper {
+	width: 760px;
+	 border: 1px solid #ccc;
+}
+#wrapper div
+{
+	
+}
+#head
+{
+
+ height: 80px;
+}
+#head #logo
+{
+	float: right;
+	width: 200px;
+	margin: 10px;
+}
+#head #head-text
+{
+	margin-top: 10px;
+	margin-left: 50px;
+	float: left;
+	width: 390px;
+	font-weight: bold;
+}
+.field
+{
+ margin: 5px;
+ float: left;
+ font-weight: bold;
+}
+.field span.text
+{
+	font-weight: normal;
+
+}
+#left 
+{
+  width: 450px;
+  float: left;
+  border-top: 1px solid #ccc;
+ 
+  
+} 
+	
+#right
+{
+	float: left;
+	  border-top: 1px solid #ccc;
+	width: 310px;
+	
+
+}
+#footer
+{
+height: 40px;
+}
+.detail
+{
+	margin: 5px;
+	width: 350px;
+	
+	
+
+}
+
+.subtask-table
+{
+	 border-top: 1px solid #ccc;
+width: 740px;
+padding: 10px;
+}
+
+
+
+
+
+
+
+table.reference {
+border:1px solid #C3C3C3;
+border-collapse:collapse;
+}
+
+
+
+table.reference th {
+background-color:#ccc;
+color: #fff;
+border:1px solid #C3C3C3;
+padding:3px;
+vertical-align:top;
+padding-left: 5px;
+font-weight: normal;
+}
+table.reference td
+{
+padding-left: 15px;
+
+padding-top: 2px;
+padding-bottom: 2px;
+text-decoration: none;
+
+height: 35px;
+ 
+
+}
+table.reference td.b
+{
+ background-color: #efefef;
+}
+
+table.reference td.db
+{
+ background-color:  #ccc;
+ 
+}
+table.reference tr
+{
+	background-color: #fff;
+}
+table.reference tr.process
+{
+ background-color:  #fbfaae;
+ 
+}
+table.reference tr.new
+{
+ background-color:  #fff;
+ 
+}
+table.reference tr.finish
+{
+ background-color:  #cbfcc5;
+ 
+}
