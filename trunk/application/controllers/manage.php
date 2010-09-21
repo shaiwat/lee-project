@@ -48,43 +48,7 @@ class Manage extends Controller {
 		}
 	}
 	
-	function customer_delete($id)
-	{
-		$this->session->set_userdata("section","customers");
-		
-		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-
-		$this->form_validation->set_rules('cust_mobile', '','trim');
-		$this->form_validation->set_rules('cust_email', '','trim');
-		
-		
-		if ($this->form_validation->run() == FALSE)
-		{
-			
-			
-			$data['cust'] = $this->db->query("select * from  customers where cust_id = $id; ")->result_array();
-			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
-			$data['content'] = $this->load->view("manage/customer_delete",$data,true);
-			$data['right'] = $this->load->view("manage/customer_right",null,true);
-			$this->template->load("main_theme","manage/manage_view",$data);
-		
-		}
-		else
-		{
-		    
-			$sql  ="delete from customers where cust_id = $id";
-			
-			
-			$result = $this->db->query($sql);
-			if($result)
-			{
-				$this->db->query("delete from unit_cust_relation where cust_id=$id");
-				
-				$this->session->set_userdata("message","ลบข้อมูลเรียบร้อย");
-				redirect('manage/customers/', 'location');
-			}
-		}
-	}
+	
 	function _page_query($sql,$base,$view="",$offset=0)
 	{
 	
@@ -273,8 +237,17 @@ class Manage extends Controller {
 	 {
 	 	$this->session->set_userdata("section","materials");
 		$this->session->set_userdata("sub_section","materials");	
-		$sql ="select  * from materials";
+		$sql ="select  * from materials where mtype_id=1";
 		$data['content'] = $this->_page_query($sql,"manage/materials","manage/material_list",$offset);
+        $data['right'] = $this->load->view("manage/material_right",null,true);
+	    $this->template->load("main_theme","manage/manage_view",$data);
+	 }
+ 	function materials2($offset =0)
+	 {
+	 	$this->session->set_userdata("section","materials");
+		$this->session->set_userdata("sub_section","materials2");	
+		$sql ="select  * from materials where mtype_id=2";
+		$data['content'] = $this->_page_query($sql,"manage/materials2","manage/material_list2",$offset);
         $data['right'] = $this->load->view("manage/material_right",null,true);
 	    $this->template->load("main_theme","manage/manage_view",$data);
 	 }
@@ -333,6 +306,63 @@ class Manage extends Controller {
 			}
 		}
 	 }
+	function material_add2()
+	 {
+	 	
+	 	
+	 	$this->session->set_userdata("section","materials");
+		$this->session->set_userdata("sub_section","material_add2");	
+		
+		
+	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		$this->form_validation->set_rules('name', 'ชื่อวัสดีุ','trim|required');
+		$this->form_validation->set_rules('brand', '','trim');
+		$this->form_validation->set_rules('mcode', 'รหัสครุภัณฑ์','trim|required');
+		$this->form_validation->set_rules('serial_code', '','trim');
+		//$this->form_validation->set_rules('amount', '','trim');
+		$this->form_validation->set_rules('mcat_id', 'หมวด','trim|required');
+		$this->form_validation->set_rules('detail', 'รายละเอียด','trim');
+		$this->form_validation->set_rules('buyprice', 'วันที่ซื่อ','trim');
+				
+		$this->form_validation->set_rules('buydate', 'ชื่อผู้ใช้งาน','trim');
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			
+			$data['categories'] = $this->db->query("select  * from categories")->result_array();
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			$data['content'] = $this->load->view("manage/material_add2",$data,true);
+			$data['right'] = $this->load->view("manage/material_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			$name = $_POST['name'];
+			$brand = $_POST['brand'];
+			$serial_code =  $_POST['serial_code'];
+			$amount = 0;
+			$mcat_id =  $_POST['mcat_id'];
+			$detail = $_POST['detail'];
+			$buyprice  = $_POST['buyprice'];
+			$buydate = $_POST['buydate'];
+			$mcode = $_POST['mcode'];
+			
+			$sql = "insert into materials 
+			(name,brand,serial_code,amount,mcat_id,detail,buyprice,buydate,mtype_id,mcode) 
+			values ('$name','$brand','$serial_code','$amount','$mcat_id','$detail','$buyprice',STR_TO_DATE('$buydate','%d/%m/%Y'),2,'$mcode');";
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","บันทึกข้อมูลเรียบร้อย");
+				redirect('manage/materials2/', 'location');
+			}
+		}
+	 }
 	 function material_edit($id)
 	 {
 	 
@@ -360,6 +390,145 @@ class Manage extends Controller {
 			$data['categories'] = $this->db->query("select  * from categories")->result_array();
 			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
 			$data['content'] = $this->load->view("manage/material_edit",$data,true);
+			$data['right'] = $this->load->view("manage/material_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			$name = $_POST['name'];
+			$brand = $_POST['brand'];
+			$serial_code =  $_POST['serial_code'];
+			$amount =  $_POST['amount'];
+			$mcat_id =  $_POST['mcat_id'];
+			$detail = $_POST['detail'];
+			$buyprice  = $_POST['buyprice'];
+			$buydate = $_POST['buydate'];
+			
+			$sql = "update materials set 
+			name = '$name',brand='$brand',serial_code ='$serial_code',
+			amount ='$amount',mcat_id='$mcat_id',
+			detail='$detail',
+			buyprice='$buyprice'
+			,buydate =STR_TO_DATE('$buydate','%d/%m/%Y')
+			 where m_id  = $id";
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","บันทึกข้อมูลเรียบร้อย");
+				redirect('manage/materials/', 'location');
+			}
+		}
+	 }
+	function material_delete($id)
+	 {
+	 
+	 	$this->session->set_userdata("section","materials");
+		$this->session->set_userdata("sub_section","material_add");	
+		
+		
+	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		
+		$this->form_validation->set_rules('brand', '','trim');
+
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			$sql = "select date_format(buydate,'%d/%m/%Y') as buydate,name,brand,serial_code,amount,mcat_id,detail,buyprice,mtype_id,m_id from materials where m_id = $id";
+			$data['rows'] = $this->db->query($sql)->result_array(); 
+			$data['categories'] = $this->db->query("select  * from categories")->result_array();
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			$data['content'] = $this->load->view("manage/material_delete",$data,true);
+			$data['right'] = $this->load->view("manage/material_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			
+			
+			$sql = "delete from materials where m_id  = $id";
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","ลบข้อมูลเรียบร้อย");
+				redirect('manage/materials/', 'location');
+			}
+		}
+	 }
+	function material_delete2($id)
+	 {
+	 
+	 	$this->session->set_userdata("section","materials");
+		$this->session->set_userdata("sub_section","material_add");	
+		
+		
+	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		
+		$this->form_validation->set_rules('brand', '','trim');
+
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			$sql = "select date_format(buydate,'%d/%m/%Y') as buydate,name,brand,serial_code,amount,mcat_id,detail,buyprice,mtype_id,m_id from materials where m_id = $id";
+			$data['rows'] = $this->db->query($sql)->result_array(); 
+			$data['categories'] = $this->db->query("select  * from categories")->result_array();
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			$data['content'] = $this->load->view("manage/material_delete2",$data,true);
+			$data['right'] = $this->load->view("manage/material_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			
+			
+			$sql = "delete from materials where m_id  = $id";
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","ลบข้อมูลเรียบร้อย");
+				redirect('manage/materials2/', 'location');
+			}
+		}
+	 }
+	function material_edit2($id)
+	 {
+	 
+	 	$this->session->set_userdata("section","materials");
+		$this->session->set_userdata("sub_section","material_add");	
+		
+		
+	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		$this->form_validation->set_rules('name', 'ชื่อวัสดีุ','trim|required');
+		$this->form_validation->set_rules('brand', '','trim');
+		$this->form_validation->set_rules('serial_code', '','trim');
+		$this->form_validation->set_rules('amount', '','trim');
+		$this->form_validation->set_rules('mcat_id', 'หมวด','trim|required');
+		$this->form_validation->set_rules('detail', 'รายละเอียด','trim');
+		$this->form_validation->set_rules('buyprice', 'วันที่ซื่อ','trim');
+		$this->form_validation->set_rules('mcode', 'รหัสครุภัณฑ์','trim|required');
+		$this->form_validation->set_rules('buydate', 'ชื่อผู้ใช้งาน','trim');
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			$sql = "select mcode, date_format(buydate,'%d/%m/%Y') as buydate,name,brand,serial_code,amount,mcat_id,detail,buyprice,mtype_id,m_id from materials where m_id = $id";
+			$data['rows'] = $this->db->query($sql)->result_array(); 
+			$data['categories'] = $this->db->query("select  * from categories")->result_array();
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			$data['content'] = $this->load->view("manage/material_edit2",$data,true);
 			$data['right'] = $this->load->view("manage/material_right",null,true);
 			$this->template->load("main_theme","manage/manage_view",$data);
 		
@@ -453,9 +622,82 @@ class Manage extends Controller {
 	 }
 	 function category_edit($id)
 	 {
+	 	$this->session->set_userdata("section","categories");
+		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		$this->form_validation->set_rules('mcat_name', 'ชื่อประเภท/หมวด','trim|required');
+		$this->form_validation->set_rules('parent_id', '','trim');
+		
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			
+			
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			$data['rows'] = $this->db->query("select  * from categories where mcat_id = $id")->result_array();
+			$data['categories'] =  $this->db->query("select  * from categories")->result_array();
+			$data['content'] = $this->load->view("manage/category_edit",$data,true);
+			
+			$data['right'] = $this->load->view("manage/category_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			
+			$mcat_name = $_POST['mcat_name'];
+			$parent_id = $_POST['parent_id'];
+			$sql = "update categories set mcat_name='$mcat_name',parent_id=$parent_id where mcat_id = $id";
+			
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","บันทึกข้อมูลเรียบร้อย");
+				redirect('manage/categories/', 'location');
+			}
+		}
 	 }
-	 function catgory_delete($id)
+	 function category_delete($id)
 	 {
+	 $this->session->set_userdata("section","categories");
+		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		$this->form_validation->set_rules('mcat_name', 'ชื่อประเภท/หมวด','trim');
+		$this->form_validation->set_rules('parent_id', '','trim');
+		
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			
+			
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			$data['rows'] = $this->db->query("select  * from categories where mcat_id = $id")->result_array();
+			$data['categories'] =  $this->db->query("select  * from categories")->result_array();
+			$data['content'] = $this->load->view("manage/category_delete",$data,true);
+			
+			$data['right'] = $this->load->view("manage/category_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			
+		
+			$sql = "delete from categories where mcat_id = $id";
+			
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","บันทึกข้อมูลเรียบร้อย");
+				redirect('manage/categories/', 'location');
+			}
+		}
 	 }
 	 function report()
 	 {
@@ -478,17 +720,145 @@ class Manage extends Controller {
 	    $this->template->load("main_theme","manage/manage_view",$data);
 	 }
 	 
-	function rooms()
+	function rooms($offset =0)
 	{
 		$this->session->set_userdata("section","rooms");
-		$this->session->set_userdata("sub_section","rooms");	
+		$this->session->set_userdata("sub_section","rooms");
+		$sql = "select * from rooms";	
 		
-        $data['right'] = "";
+        $data['right'] = $this->load->view("manage/room_right",null,true);
         $data['menu'] = $this->load->view("manage/manage_menu",null,true);
-        $data['content'] ="";
+        $data['content'] = $this->_page_query($sql,"manage/rooms","manage/room_list",$offset);
 	    $this->template->load("main_theme","manage/manage_view",$data);
 	} 
+	function room_add()
+	{
+		$this->session->set_userdata("section","rooms");
+		$this->session->set_userdata("sub_section","room_add");	
+		
+		
+	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		$this->form_validation->set_rules('room_name', 'ชื่อห้อง/สภานที่','trim|required');
+		$this->form_validation->set_rules('detail', '','trim');
+		
 	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			
+			
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			
+			
+			$data['content'] = $this->load->view("manage/room_add",$data,true);
+			
+			$data['right'] = $this->load->view("manage/room_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			
+			$room_name = $_POST['room_name'];
+			$detail = $_POST['detail'];
+			$sql = "insert into rooms (room_name,detail) values('$room_name','$detail')";
+			
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","บันทึกข้อมูลเรียบร้อย");
+				redirect('manage/rooms/', 'location');
+			}
+		}
+	}
+	function room_edit($id)
+	{
+		$this->session->set_userdata("section","rooms");
+	
+		
+		
+	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		$this->form_validation->set_rules('room_name', 'ชื่อห้อง/สภานที่','trim|required');
+		$this->form_validation->set_rules('detail', '','trim');
+		
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			
+			
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			
+			$data['rows'] = $this->db->query("select  *  from  rooms where room_id  = $id")->result_array();
+			$data['content'] = $this->load->view("manage/room_edit",$data,true);
+			
+			$data['right'] = $this->load->view("manage/room_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			
+			$room_name = $_POST['room_name'];
+			$detail = $_POST['detail'];
+			$sql = "update  rooms set room_name = '$room_name',detail = '$detail' where room_id  = $id";
+			
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","บันทึกข้อมูลเรียบร้อย");
+				redirect('manage/rooms/', 'location');
+			}
+		}
+	}
+	function room_delete($id)
+	{
+		$this->session->set_userdata("section","rooms");
+		
+		
+		
+	 	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		
+		$this->form_validation->set_rules('room_name', 'ชื่อห้อง/สภานที่','trim');
+		$this->form_validation->set_rules('detail', '','trim');
+		
+	
+	
+		if ($this->form_validation->run() == FALSE)
+		{
+			
+			
+			$data['menu'] = $this->load->view("manage/manage_menu",null,true);
+			
+			$data['rows'] = $this->db->query("select  *  from  rooms where room_id  = $id")->result_array();
+			$data['content'] = $this->load->view("manage/room_delete",$data,true);
+			
+			$data['right'] = $this->load->view("manage/room_right",null,true);
+			$this->template->load("main_theme","manage/manage_view",$data);
+		
+		}
+		else
+		{
+			
+			
+			$sql = "delete from  rooms  where room_id  = $id";
+			
+			$result = $this->db->query($sql);
+			if($result)
+			{
+				
+				
+				$this->session->set_userdata("message","ลบข้อมูลเรียบร้อย");
+				redirect('manage/rooms/', 'location');
+			}
+		}
+	}
 }
 
 
