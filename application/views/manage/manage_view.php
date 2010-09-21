@@ -1,4 +1,4 @@
-<?php echo $menu; ?>
+<?php if(isset($manu)){ echo $menu; }?>
 
 
 <div  id="manage-contaner">
@@ -9,7 +9,7 @@
         <?php echo $content; ?>
     </div>
  <div id="manage-right">
-        <?php echo $right; ?>
+        <?php if(isset($right)){ echo $right; } ?>
     </div> 
     <div style="clear:both;"></div>
 </div>
