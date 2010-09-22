@@ -2,6 +2,7 @@
 <div id="nav">
     
   <ul>
+  <li <?php if($f=="front"){ echo 'id="current"';} ?> ><a href="<?php echo site_url("front"); ?>">หน้าหลัก<span class="nav_tr">&nbsp;</span><span class="nav_br">&nbsp;</span><span class="nav_bl">&nbsp;</span></a></li>
    <li <?php if($f=="report"){ echo 'id="current"';} ?> ><a href="<?php echo site_url("manage/report"); ?>">สรุปข้อมูล<span class="nav_tr">&nbsp;</span><span class="nav_br">&nbsp;</span><span class="nav_bl">&nbsp;</span></a></li>
     <li <?php if($f=="materials"){ echo 'id="current"';} ?> ><a href="<?php echo site_url("manage/materials"); ?>">จัดการวัสดุครุภัณฑ์์<span class="nav_tr">&nbsp;</span><span class="nav_br">&nbsp;</span><span class="nav_bl">&nbsp;</span></a></li>
      <li <?php if($f=="categories"){ echo 'id="current"';} ?> ><a href="<?php echo site_url("manage/categories"); ?>">จัดการกลุ่ม/ประเถท<span class="nav_tr">&nbsp;</span><span class="nav_br">&nbsp;</span><span class="nav_bl">&nbsp;</span></a></li>

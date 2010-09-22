@@ -6,7 +6,7 @@
       <div id="usermenu">
       
        
-      <a href="<?php  echo site_url("manage/problems"); ?>">
+      <a href="<?php  echo site_url("manage"); ?>">
      
       <img height="22" width="100" alt="จัดการข้อมูล" src="images/common/user_data_setting_butt.jpg"></a>
       <a href="<?php  echo site_url("manage/users"); ?>">

@@ -7,6 +7,22 @@ class front extends Controller {
 		parent::Controller();	
 	}
 
+function index()
+{
+	redirect('front/search', 'location');
+}
+function search()
+{
+	$data  =array();
+	$data['content'] = $this->load->view("search_form",$data,true);
+	 $this->template->load("main_theme","manage/manage_view",$data);
+}
+function search_result()
+{
+
+	
+}
+
 function material($id)
 {
 		
