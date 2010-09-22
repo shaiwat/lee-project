@@ -15,7 +15,22 @@ class Manage extends Controller {
 	{
 			redirect('manage/report', 'location');
 	}
+	function getcode($id=0)
+	{
+		
+		
+		$code = $this->db->query("select run_no from types where mtype_id=$id")->result_array();
+		
+		
+		if($code)
+		{	
+			$this->db->query("update types set run_no = run_no+1 where mtype_id=$id");
+			echo date("y").date("m")."".str_pad($code[0]['run_no'],8,0,STR_PAD_LEFT);
+		}
+		
 	
+		
+	}
 	function username_check($str)
 	{
 		$sql = "select count(*) as c from user_login where username='$str'";

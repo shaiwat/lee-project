@@ -1,4 +1,4 @@
-<?php if(isset($manu)){ echo $menu; }?>
+<?php if(isset($menu)){ echo $menu; }?>
 
 
 <div  id="manage-contaner">
@@ -6,7 +6,7 @@
         <?php $this->load->view("message");?>
         <?php if(isset($filter)){echo $filter;  } ?>
    
-        <?php echo $content; ?>
+        <?php  if(isset($content)){ echo $content; } ?>
     </div>
  <div id="manage-right">
         <?php if(isset($right)){ echo $right; } ?>
