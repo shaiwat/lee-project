@@ -1,0 +1,40 @@
+/*
+	 CSS-Tricks Example
+	 by Chris Coyier
+	 http://css-tricks.com
+*/
+
+* { margin: 0; padding: 0; }
+body { font: 14px/1.4 Georgia, serif; }
+
+#page-wrap { width: 800px; margin: 0 auto; height:1150px; display:block; position:relative; }
+
+.table { border-collapse: collapse; }
+.table td, table th { border: 1px solid black; padding: 3px; }
+
+#header { 
+
+    color: #333;
+    font: bold 22px Helvetica,Sans-Serif;
+    height: 29px;
+    margin: 20px 0;
+    padding: 10px 5px;
+    text-align: right;
+    width: 790px;
+	display:block;
+	float:left;
+	border-bottom:#333 solid 2px;
+	}
+
+#address { width: 250px; height: 150px; float: left; }
+#customer { overflow: hidden; }
+
+
+#customer-title { font-size: 20px; font-weight: bold; float: left; }
+
+#items { clear: both; width: 798px; margin: 0 0 0 0; border: 1px solid #333; }
+#items th { background: #eee; }
+
+#items tr.item-row td { border: 0; vertical-align: top; }
+#items td.blank { border: 0; }
+#terms { text-align: center; margin: 20px 0 0 0; }
