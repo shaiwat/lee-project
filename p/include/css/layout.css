@@ -1,0 +1,168 @@
+@CHARSET "UTF-8";
+body {
+margin: 0;
+font-size: 12px;
+font-family: "Trebuchet MS", serif, Verdana;
+line-height: 16px;
+color: #666666;
+background: url(../images/blue.png) repeat-x;
+background-position: top center;
+padding: 0px;
+
+}
+
+
+body img {
+border: none;
+
+}
+
+#wrapper {
+margin: 0 auto;
+width: 1000px;
+}
+
+#main {
+	width: 912px;
+	margin: 0 auto;
+}
+
+#top {
+	height: 64px;
+	position: relative;
+}
+
+
+
+#head {
+
+height: 44px;
+width: 1000px;
+}
+/* Jquery */
+
+ul.tabs {
+	margin: 0;
+	padding: 0;
+	float: left;
+	list-style: none;
+	height: 32px; /*--Set height of tabs--*/
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #999;
+	
+}
+ul.tabs li {
+	float: left;
+	margin: 0;
+	padding: 0;
+	height: 31px; /*--Subtract 1px from the height of the unordered list--*/
+	line-height: 31px; /*--Vertically aligns the text within the tab--*/
+	border: 1px solid #999;
+	border-left: none;
+	margin-bottom: -1px; /*--Pull the list item down 1px--*/
+	overflow: hidden;
+	position: relative;
+	background: #e0e0e0;
+}
+ul.tabs li a {
+	text-decoration: none;
+	color: #000;
+	display: block;
+	font-size: 1.2em;
+	padding: 0 20px;
+	border: 1px solid #fff; /*--Gives the bevel look with a 1px white border inside the list item--*/
+	outline: none;
+}
+ul.tabs li a:hover {
+	background: #ccc;
+}
+html ul.tabs li.active, html ul.tabs li.active a:hover  { /*--Makes sure that the active tab does not listen to the hover properties--*/
+	background: #fff;
+	border-bottom: 1px solid #fff; /*--Makes the active tab look like it's connected with its content--*/
+}
+
+/* Tab content */
+.tab_container {
+	border: 1px solid #999;
+	border-top: none;
+	overflow: hidden;
+	clear: both;
+	float: left;
+	width: 586px;
+	background: #fff;
+}
+.tab_content {
+	padding: 20px;
+}
+div.messages{
+	
+.margin-top: 9px !important;
+
+}
+.container {
+background:none repeat scroll 0 0 #FFFFFF;
+border-color:-moz-use-text-color #999 #999;
+border-right:1px solid #999;
+border-style:none solid solid;
+border-width:medium 1px 1px;
+clear:both;
+float:left;
+overflow:hidden;
+width:780px;
+padding: 10px 10px;
+min-height: 250px;
+}
+.admin_container
+{
+	background:none repeat scroll 0 0 #FFFFFF;
+border-color:-moz-use-text-color #999 #999;
+border-right:1px solid #999;
+border-style:none solid solid;
+border-width:medium 1px 1px;
+clear:both;
+float:left;
+overflow:hidden;
+width:866px;
+padding: 15px 15px;
+}
+/* Table Styles */
+.table {
+	border:1px solid #CCCCCC;
+	width:100%;
+}
+.table.no-border {
+	border:none
+}
+.table thead th, .table thead td {
+	padding:6px 10px;
+	font-weight: 700;
+	color: #333;
+	background:url("../img/boxheader.gif") repeat-x scroll center top #E2E2E2;
+	border-bottom: 1px solid #cccccc;
+	border-right:1px solid #CCCCCC;
+}
+.table thead th.last, .table thead td.last {
+	border-right:0;
+}
+.table thead th.checkbox, .table thead td.checkbox {
+	width:25px;
+}
+.table tbody th, .table tbody td {
+	border-right:1px dotted #CCCCCC;
+	border-bottom:1px dotted #CCCCCC;
+	vertical-align:top;
+	padding:6px;
+	font-size:93%;
+}
+.table tbody tr.alt td {
+	background:#F2F2F2;
+}
+.table tbody th.last, .table tbody td.last {
+	border-right:0 none;
+}
+.table tbody tr.last td {
+	border-bottom:0 none;
+}
+.table tbody tr:hover th, .table tbody tr:hover td {
+	/*background:#d3ecf9;*/
+}
