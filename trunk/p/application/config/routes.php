@@ -40,7 +40,7 @@
 |
 */
 
-$route['default_controller'] = "front/index";
+$route['default_controller'] = "admin/index";
 $route['logout'] = "login/logout";
 $route['scaffolding_trigger'] = "";
 

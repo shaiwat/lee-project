@@ -235,14 +235,14 @@ class admin extends Controller {
 		//$this->template->load('admin/themes',"admin/dashboard",null);
 		$this->_init_filter();
 		
-		redirect('admin/products', 'location'); 
+		redirect('admin/materials', 'location'); 
 	}
 	function _init_filter()
 	{
 		
 		$filter = array();
-		$filter["file_cat_id"] = 0;
-		$filter["cat_id"] = 0;
+		$filter["file_category_id"] = 0;
+		$filter["category_id"] = 0;
 		
 		$this->session->set_userdata("filter",$filter);
 		
@@ -250,23 +250,22 @@ class admin extends Controller {
 	function category_edit($id)
 	{
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('pcat_name_th',  'ชื่อหมวดสินค้าภาษาไทย', 'trim|required');
-			$this->form_validation->set_rules('pcat_name_en', 'ชื่อหมวดสินค้า English', 'trim|required');
-			$this->form_validation->set_rules('is_publish', '', 'trim');
-			$this->form_validation->set_rules('email', '', 'trim');
+			$this->form_validation->set_rules('category_name',  'ชื่อหมวด', 'trim|required');
+			
+			
 			
 			if ($this->form_validation->run() == FALSE)
 			{
-				$data['cat'] = $this->db->query("select * from product_categories where cat_id =$id")->result_array();
+				$data['row'] = $this->db->query("select * from material_categories where category_id =$id")->result_array();
 				$this->template->load('admin/themes',"admin/category_edit",$data);
 			}
 			else
 			{ 	
 				
-				$this->db->where('cat_id', $id);
-				$this->db->update('product_categories', $_POST);
+				$this->db->where('category_id', $id);
+				$this->db->update('material_categories', $_POST);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
-				$this->fs->save_log();	
+				
 				redirect('admin/categories', 'location');
 				
 			}
@@ -274,10 +273,8 @@ class admin extends Controller {
 	function category_add()
 	{
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('pcat_name_th',  'ชื่อหมวดสินค้าภาษาไทย', 'trim|required');
-			$this->form_validation->set_rules('pcat_name_en', 'ชื่อหมวดสินค้า English', 'trim|required');
-				$this->form_validation->set_rules('email', 'email', 'trim');
-			$this->form_validation->set_rules('is_publish', '', 'trim');
+			$this->form_validation->set_rules('category_name',  'ชื่อหมวด', 'trim|required');
+			
 			
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -285,9 +282,9 @@ class admin extends Controller {
 			}
 			else
 			{ 	
-				$this->db->insert("product_categories",$_POST);
+				$this->db->insert("material_categories",$_POST);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
-				$this->fs->save_log();		
+				
 				redirect('admin/categories', 'location');
 				
 			}
@@ -295,13 +292,13 @@ class admin extends Controller {
 	function user_add()
 	{
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('username',  '', 'trim|required');
-			$this->form_validation->set_rules('password', '', 'trim|required');
-			$this->form_validation->set_rules('firstname', '', 'trim|required');
-			$this->form_validation->set_rules('lastname', '', 'trim|required');
-			$this->form_validation->set_rules('position', '', 'trim');
-			$this->form_validation->set_rules('email', '', 'trim|required');
-			$this->form_validation->set_rules('role_id', '', 'trim|required');
+			$this->form_validation->set_rules('username',  'ชื่อผู้ใช้งาน', 'trim|required');
+			$this->form_validation->set_rules('password', 'รหัสผ่าน', 'trim|required');
+			$this->form_validation->set_rules('firstname', 'ชื่อ', 'trim|required');
+			$this->form_validation->set_rules('lastname', 'นามสกุล', 'trim|required');
+			$this->form_validation->set_rules('position', 'ตำแหน่ง', 'trim');
+			$this->form_validation->set_rules('email', 'อีเมล์', 'trim|required');
+			$this->form_validation->set_rules('role_id', 'ระดับผู้ใช้งาน', 'trim|required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -313,7 +310,7 @@ class admin extends Controller {
 				$values["password"] = md5($values["password"]);
 				$this->db->insert("users",$values);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
-				$this->fs->save_log();		
+					
 				redirect('admin/users', 'location');
 				
 			}
@@ -335,7 +332,7 @@ class admin extends Controller {
 				$this->db->where("user_id",$id);
 				$this->db->delete("users");
 				$this->user->set_message("","ลบกเรียบร้อยแล้ว","success");
-				$this->fs->save_log();		
+			
 				redirect('admin/users', 'location');
 				
 			}
@@ -360,7 +357,7 @@ class admin extends Controller {
 				$this->db->where("user_id",$id);
 				$this->db->update("users",$values);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
-				$this->fs->save_log();		
+				
 				redirect('admin/users', 'location');
 				
 			}
@@ -368,14 +365,15 @@ class admin extends Controller {
 	}
 	function user_edit($id)
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('username',  '', 'trim|required');
-			//$this->form_validation->set_rules('password', '', 'trim|required');
-			$this->form_validation->set_rules('firstname', '', 'trim|required');
-			$this->form_validation->set_rules('lastname', '', 'trim|required');
-			$this->form_validation->set_rules('position', '', 'trim');
-			$this->form_validation->set_rules('email', '', 'trim|required');
-			$this->form_validation->set_rules('role_id', '', 'trim|required');
+			$this->form_validation->set_rules('username',  'ชื่อผู้ใช้งาน', 'trim|required');
+			//$this->form_validation->set_rules('password', 'รหัสผ่าน', 'trim|required');
+			$this->form_validation->set_rules('firstname', 'ชื่อ', 'trim|required');
+			$this->form_validation->set_rules('lastname', 'นามสกุล', 'trim|required');
+			
+			$this->form_validation->set_rules('position', 'ตำแหน่ง', 'trim');
+			$this->form_validation->set_rules('email', 'อีเมล์', 'trim|required');
+			$this->form_validation->set_rules('tel', '', 'trim');
+			$this->form_validation->set_rules('role_id', 'ระดับผู้ใช้งาน', 'trim|required');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -389,7 +387,7 @@ class admin extends Controller {
 				$this->db->where("user_id",$id);
 				$this->db->update("users",$values);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
-				$this->fs->save_log();		
+			
 				redirect('admin/users', 'location');
 				
 			}
@@ -397,20 +395,20 @@ class admin extends Controller {
 	function category_delete($id)
 	{
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('cat_id',  '', 'trim|required');
+			$this->form_validation->set_rules('category_id',  '', 'trim|required');
 			
 			
 			if ($this->form_validation->run() == FALSE)
 			{
-				$data['cat'] = $this->db->query("select * from product_categories where cat_id =$id")->result_array();
+				$data['cat'] = $this->db->query("select * from material_categories where category_id =$id")->result_array();
 				$this->template->load('admin/themes',"admin/category_delete",$data);
 			}
 			else
 			{ 	
-				$this->db->where('cat_id', $id);
-				$this->db->delete('product_categories');
+				$this->db->where('category_id', $id);
+				$this->db->delete('material_categories');
 				$this->user->set_message("","ลบเรียบร้อยแล้ว","success");	
-				$this->fs->save_log();	
+				
 				redirect('admin/categories', 'location');
 				
 			}
@@ -418,51 +416,49 @@ class admin extends Controller {
 	function categories()
 	{
 		
-		
-		
 		$this->template->load('admin/themes',"admin/categories",null);
 	}
 	function contacts()
 	{
 		$this->template->load('admin/themes',"admin/contacts",null);
 	}
-	function product_filter()
+	function material_filter()
 	{
-		$id = $_POST["cat_id"];
+		$id = $_POST["category_id"];
 		$filter = $this->session->userdata("filter");
-		$filter["cat_id"] = $id;
+		$filter["category_id"] = $id;
 		$this->session->set_userdata("filter",$filter);
-		redirect('admin/products', 'location');
+		redirect('admin/materials', 'location');
 		
 	}
-	function products($offset=0)
+	function materials($offset=0)
 	{
-		$filter = $this->session->userdata("filter");
+		/*$filter = $this->session->userdata("filter");
 		$condition ="";
-		if($filter["cat_id"])
+		if($filter["category_id"])
 		{
-		$condition = " and p.cat_id = ".$filter["cat_id"];
+		$condition = " and p.category_id = ".$filter["category_id"];
 		
-		}
-		$sql = "select * from products p left join product_categories c on c.cat_id = p.cat_id where 1 $condition "; 
-		$base = "admin/products";
+		}*/
+		$sql = "select * from materials"; 
+		$base = "admin/materials";
 		
-		$this->_page_query($sql,$base,"admin/products",$offset,array(),true,50);
+		$this->_page_query($sql,$base,"admin/materials",$offset,array(),true,50);
 		
-		//$data["products"]= $this->db->query("select * from products p left join product_categories c on c.cat_id = p.cat_id ")->result_array();
-		//$this->template->load('admin/themes',"admin/products",$data);
+		//$data["materials"]= $this->db->query("select * from materials p left join material_categories c on c.category_id = p.category_id ")->result_array();
+		//$this->template->load('admin/themes',"admin/materials",$data);
 	}
-	function product_add()
+	function material_add()
 	{
 		
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('product_name_th',  'ชื่อสินค้าภาษาไทย', 'trim|required');
-			$this->form_validation->set_rules('product_name_en', 'ชื่อสินค้า English', 'trim|required');
-			$this->form_validation->set_rules('product_code', 'รหัสสินค้า', 'trim');
-			$this->form_validation->set_rules('cat_id', 'หมวดสินค้า', 'trim|required');
+			$this->form_validation->set_rules('material_name_th',  'ชื่อสินค้าภาษาไทย', 'trim|required');
+			$this->form_validation->set_rules('material_name_en', 'ชื่อสินค้า English', 'trim|required');
+			$this->form_validation->set_rules('material_code', 'รหัสสินค้า', 'trim');
+			$this->form_validation->set_rules('category_id', 'หมวดสินค้า', 'trim|required');
 			$this->form_validation->set_rules('brand', '', 'trim');
 			$this->form_validation->set_rules('model', '', 'trim');
-			$this->form_validation->set_rules('product_status', 'หมวดสินค้า', 'trim|required');
+			$this->form_validation->set_rules('material_status', 'หมวดสินค้า', 'trim|required');
 			$this->form_validation->set_rules('sort_order', '', 'trim|required');
 			$this->form_validation->set_rules('excerpt_th', '', 'trim|required');
 			$this->form_validation->set_rules('excerpt_en', '', 'trim|required');
@@ -479,30 +475,30 @@ class admin extends Controller {
 			$this->form_validation->set_rules('data_sheet', '', 'trim');
 			if ($this->form_validation->run() == FALSE)
 			{
-				$this->template->load('admin/themes',"admin/product_add",null);
+				$this->template->load('admin/themes',"admin/material_add",null);
 			}
 			else
 			{ 	
-				$this->db->insert("products",$_POST);
+				$this->db->insert("materials",$_POST);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				$this->fs->save_log();	
 				//echo $this->db->truncate(); 
-				redirect('admin/products', 'location');
+				redirect('admin/materials', 'location');
 			}
 		
 		
 		
 	}
-	function product_edit($id)
+	function materail_edit($id)
 	{
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('product_name_th',  'ชื่อสินค้าภาษาไทย', 'trim|required');
-			$this->form_validation->set_rules('product_name_en', 'ชื่อสินค้า English', 'trim|required');
-			$this->form_validation->set_rules('product_code', 'รหัสสินค้า', 'trim');
-			$this->form_validation->set_rules('cat_id', 'หมวดสินค้า', 'trim|required');
+			$this->form_validation->set_rules('material_name_th',  'ชื่อสินค้าภาษาไทย', 'trim|required');
+			$this->form_validation->set_rules('material_name_en', 'ชื่อสินค้า English', 'trim|required');
+			$this->form_validation->set_rules('material_code', 'รหัสสินค้า', 'trim');
+			$this->form_validation->set_rules('category_id', 'หมวดสินค้า', 'trim|required');
 			$this->form_validation->set_rules('brand', '', 'trim');
 			$this->form_validation->set_rules('model', '', 'trim');
-			$this->form_validation->set_rules('product_status', 'หมวดสินค้า', 'trim|required');
+			$this->form_validation->set_rules('material_status', 'หมวดสินค้า', 'trim|required');
 			$this->form_validation->set_rules('sort_order', '', 'trim|required');
 			$this->form_validation->set_rules('excerpt_th', '', 'trim|required');
 			$this->form_validation->set_rules('excerpt_en', '', 'trim|required');
@@ -519,175 +515,100 @@ class admin extends Controller {
 			$this->form_validation->set_rules('data_sheet', '', 'trim');
 			if ($this->form_validation->run() == FALSE)
 			{
-				$data["product"] = $this->db->query("select * from products where product_id = $id")->result_array();
-				$this->template->load('admin/themes',"admin/product_edit",$data);
+				$data["material"] = $this->db->query("select * from materials where material_id = $id")->result_array();
+				$this->template->load('admin/themes',"admin/material_edit",$data);
 			}
 			else
 			{ 	
-				$this->db->where('product_id', $id);
+				$this->db->where('material_id', $id);
 			
-				$this->db->update("products",$_POST);
+				$this->db->update("materials",$_POST);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-				$this->fs->save_log();	
+				
 				//echo $this->db->truncate(); 
-				redirect('admin/products', 'location');
+				redirect('admin/materials', 'location');
 			}
 		
 	}
-	function product_delete($id)
+	function material_edit($id)
 	{
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
 			
-			$this->form_validation->set_rules('product_id', '', 'trim');
+			$this->form_validation->set_rules('material_id', '', 'trim');
 			if ($this->form_validation->run() == FALSE)
 			{
-				$data["product"] = $this->db->query("select * from products where product_id = $id")->result_array();
-				$this->template->load('admin/themes',"admin/product_delete",$data);
+				$data["material"] = $this->db->query("select * from materials where material_id = $id")->result_array();
+				$this->template->load('admin/themes',"admin/material_delete",$data);
 			}
 			else
 			{ 	
-				$this->db->where('product_id', $id);
-				$this->db->delete("products");
+				$this->db->where('material_id', $id);
+				$this->db->delete("materials");
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				$this->fs->save_log();	
 				//echo $this->db->truncate(); 
-				redirect('admin/products', 'location');
+				redirect('admin/materials', 'location');
 			}
 		
 	}
 	
-	function career()
+	function budget()
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('page_career_th',  '', 'trim');
-			
-			
-			
-			if ($this->form_validation->run() == FALSE)
-			{
-				$this->template->load('admin/themes',$this->user->current_controller(),null);
-			}
-			else
-			{ 	
-				foreach($_POST as $key => $row)
-				{
-					$this->db->where("option_name",$key);
-					$this->db->update("options",array( "option_value" =>$row ));
-					$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-					$this->fs->save_log();	
-				}
-				redirect('admin/career', 'location');
-				
-			}
+		$this->template->load('admin/themes',"admin/budget",null);
+	}
+	function budget_add()
+	{
 		
 	}
-	function about()
+	function budget_edit($id)
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('page_about_th',  '', 'trim');
-			$this->form_validation->set_rules('page_about_en', '', 'trim');
-			
-			
-			if ($this->form_validation->run() == FALSE)
-			{
-				$this->template->load('admin/themes',$this->user->current_controller(),null);
-			}
-			else
-			{ 	
-				foreach($_POST as $key => $row)
-				{
-					$this->db->where("option_name",$key);
-					$this->db->update("options",array( "option_value" =>$row ));
-					$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-					
-				}
-				redirect('admin/about', 'location');
-				
-			}
 		
 	}
-	function carpark()
+	function budget_delete($id)
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('page_carpark_th',  '', 'trim');
-			$this->form_validation->set_rules('page_carpark_en', '', 'trim');
-			
-			
-			if ($this->form_validation->run() == FALSE)
-			{
-				$this->template->load('admin/themes',$this->user->current_controller(),null);
-			}
-			else
-			{ 	
-				foreach($_POST as $key => $row)
-				{
-					$this->db->where("option_name",$key);
-					$this->db->update("options",array( "option_value" =>$row ));
-					$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-					
-				}
-				redirect('admin/carpark', 'location');
-				
-			}
 		
 	}
-	function showcase_old()
+	
+	function company()
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('page_carpark_th',  '', 'trim');
-			$this->form_validation->set_rules('page_carpark_en', '', 'trim');
-			
-			
-			if ($this->form_validation->run() == FALSE)
-			{
-				$this->template->load('admin/themes',$this->user->current_controller(),null);
-			}
-			else
-			{ 	
-				foreach($_POST as $key => $row)
-				{
-					$this->db->where("option_name",$key);
-					$this->db->update("options",array( "option_value" =>$row ));
-					$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-					
-				}
-				redirect($this->user->current_controller(), 'location');
-				
-			}
-		
+			$this->template->load('admin/themes',"admin/company",null);
 	}
-	function faq()
+	function company_add()
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('page_carpark_th',  '', 'trim');
-			$this->form_validation->set_rules('page_carpark_en', '', 'trim');
+		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		$this->form_validation->set_rules('company_name',  'ชื่อบรริษัท', 'trim|required');
+		$this->form_validation->set_rules('address',  '', 'trim');
+		$this->form_validation->set_rules('tel',  '', 'trim');
+		$this->form_validation->set_rules('fax',  '', 'trim');
+		$this->form_validation->set_rules('email',  '', 'trim');
+		
+		
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->template->load('admin/themes',"admin/company_add",null);
+		}
+		else
+		{ 	
+			$this->db->insert("company",$_POST);
+			$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
 			
+			redirect('admin/company', 'location');
 			
-			if ($this->form_validation->run() == FALSE)
-			{
-				$this->template->load('admin/themes',$this->user->current_controller(),null);
-			}
-			else
-			{ 	
-				foreach($_POST as $key => $row)
-				{
-					$this->db->where("option_name",$key);
-					$this->db->update("options",array( "option_value" =>$row ));
-					$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-					 $this->fs->save_log("Update Faq");
-				}
-				redirect($this->user->current_controller(), 'location');
-				
-			}
-			
-			
+		}
+	}
+	function company_edit($id)
+	{
+	}
+	function compay_delete($id)
+	{
 		
 	}
 	function file_filter()
 	{
-		$id = $_POST["file_cat_id"];
+		$id = $_POST["file_category_id"];
 		$filter = $this->session->userdata("filter");
-		$filter["file_cat_id"] = $id;
+		$filter["file_category_id"] = $id;
 		
 		
 		$this->session->set_userdata("filter",$filter);
@@ -697,12 +618,12 @@ class admin extends Controller {
 	{
 		$filter = $this->session->userdata("filter");
 		$condition = "";
-		if($filter["file_cat_id"])
+		if($filter["file_category_id"])
 		{
-			$condition = " and f.file_cat_id = ".$filter["file_cat_id"];
+			$condition = " and f.file_category_id = ".$filter["file_category_id"];
 		
 		}
-		$sql = "select * from files f left join  file_cats c on f.file_cat_id = c.file_cat_id   where 1 $condition order by file_id desc "; 
+		$sql = "select * from files f left join  file_cats c on f.file_category_id = c.file_category_id   where 1 $condition order by file_id desc "; 
 		$base = "admin/filse";
 		
 		$this->_page_query($sql,$base,"admin/files",$offset,array(),true,50);
@@ -728,7 +649,7 @@ class admin extends Controller {
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
 			
 			$this->form_validation->set_rules('detail', 'อธิบายไฟล์', 'trim');
-			$this->form_validation->set_rules('file_cat_id', 'กลุ่มไฟล์', 'trim');
+			$this->form_validation->set_rules('file_category_id', 'กลุ่มไฟล์', 'trim');
 			if ($this->form_validation->run() == FALSE)
 			{
 				$error = array('error' => $this->upload->display_errors());
@@ -757,7 +678,7 @@ class admin extends Controller {
 			$values = array();
 			$values["file_name"] = $upload_data["file_name"];
 			$values["detail"] = $_POST["detail"];
-			$values["file_cat_id"] = $_POST["file_cat_id"];
+			$values["file_category_id"] = $_POST["file_category_id"];
 			$values["file_type"] = $upload_data["file_type"];
 			$values["raw_name"] = $upload_data["raw_name"];
 			$values["is_image"] = $upload_data["is_image"];
@@ -769,7 +690,7 @@ class admin extends Controller {
 			//$this->template->load('admin/themes',"admin/file_view",$data);
 			//$data = array('upload_data' => $this->upload->data());
 			$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-			$this->fs->save_log();	
+		
 			redirect('admin/files', 'location');
 			
 		}
@@ -844,7 +765,7 @@ class admin extends Controller {
 				}
 				redirect('admin/front', 'location');
 				//print_r($_POST);
-				//$this->db->insert("product_categories",$_POST);
+				//$this->db->insert("material_categories",$_POST);
 				//$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				//redirect('admin/categories', 'location');
 				

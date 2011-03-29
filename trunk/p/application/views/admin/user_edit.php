@@ -5,9 +5,9 @@
          <?php echo  validation_errors('<div class="error"> <span class="strong"></span>', '</div>'); ?>
         <fieldset>
         
-          <legend>เพิ่มใช้งานใหม่</legend>
+          <legend>แก้ไขงานใหม่</legend>
           <div class="field">
-          <label >Username:</label><br>
+          <label >ชื่อผู้ใช้งาน:</label><br>
          
 		 <input type="text" name="username" value="<?php echo set_value("username",$user[0]["username"]); ?>"><br>
 		 </div>
@@ -24,27 +24,35 @@
          
 		 <input type="text" name="lastname"  value="<?php echo set_value("lastname",$user[0]["lastname"]); ?>" /><br>
 		 </div>
-		 
+		  <div class="cleaner"></div>
 		  <div class="field">
 		  
-          <label >Email:</label><br>
+          <label >อีเมล์:</label><br>
          
 		 <input type="text" name="email" value="<?php echo set_value("email",$user[0]["email"]); ?>"><br>
 		 </div>
 		   <div class="cleaner"></div>
+		    <div class="field">
+		   <label >เบอร์โทร:</label><br>
+         
+		 <input type="text" name="tel" value="<?php echo set_value("tel",$user[0]["tel"]); ?>"><br>
+		 </div>
+		   <div class="cleaner"></div>
 		 <div class="field">
 		 
-		  <label for="firstname">Position:</label><br>
+		  <label for="firstname">ตำแหน่ง:</label><br>
          
 		 <input type="text" name="position"  value="<?php echo set_value("position",$user[0]["position"]); ?>" /><br>
 		 </div>
 		  <div class="cleaner"></div>
 		  <div class="field">
 		  
-           <label > Role:</label><br>
+            <label > ระดับการใช้งาน:</label><br>
+           <?php $roles =  $this->db->get("roles")->result_array(); ?>
 		<select id="role_id" name="role_id">
-			<option value="1">Admin</option>
-			<option value="2">Editor</option>
+		<?php foreach ($roles as $row){ ?>
+			<option value="<?php echo $row["role_id"] ?>"><?php echo $row["role_name"]; ?></option>
+		<?php } ?>
 		</select>
 		
 		 </div>
