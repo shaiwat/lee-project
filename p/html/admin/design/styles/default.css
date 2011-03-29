@@ -16,7 +16,7 @@
 ------------------------- General 
 */
 * {padding:0; margin:0; font-size:100%;}
-html, body {height:100%;}
+html, body {height:100%; }
 .cleaner {clear:both; height:1px; font-size:1px; line-height:1px;}
 .hidden {display:none}
 .noborder {border:none !important;}
@@ -49,7 +49,7 @@ html, body {height:100%;}
 #content .error {color:#d1481a;}
 #content .succes {color:#669900;}
 #content .question {color:#399ece;}
-
+#content input { height: 22px; }
 /*
 ------------------------- Witti
 */

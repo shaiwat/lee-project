@@ -3,10 +3,9 @@
 <head>
 
 
-
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="content-language" content="en" />
-<title>ForwardSystem CMS</title>
+<title>ระบบบริหารจัดการวัสดุครุภัณฑ์</title>
 <base href="<?php echo base_url(); ?>" />
 
 
@@ -34,7 +33,7 @@ $(function() {
   <div id="witti">
   
     <div id="header">
-    <div style="margin: 10px;float: left;" >ระบบบริหารจัดการเวบไซต์ Forwardsystem.co.th</div>
+    <div style="margin: 10px;float: left;" >ระบบบริหารจัดการวัสดุครุภัณฑ์</div>
     	<?php if($this->user->is_login()){
     		$user = $this->user->get();
     	?>

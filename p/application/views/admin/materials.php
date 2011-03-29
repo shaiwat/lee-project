@@ -7,18 +7,18 @@
 	
 }
 ?>
-<h1>รายการสินค้า</h1>
+<h1>รายการวัสดุครุภัณฑ์</h1>
  <?php echo $this->user->messages(); ?>
-<?php $this->load->view("admin/product_filter"); ?>
+<?php $this->load->view("admin/material_filter"); ?>
 <table id="list">
           <tbody><tr class=" odd">
-            <th style="width: 50px;" >Thumbail</th>
-            <th>ชื่อสินค้า</th>
-             <th>ยี้ห้อ</th>
+            <th style="width: 50px;" >รูป</th>
+            <th>เลขที่ครุภัณฑ์</th>
+             <th>ชื่อ</th>
              
-            <th>หมวดสินค้า</th>
-             <th>Publish</th>
-            <th>แก้ไข</th>
+            <th>หมวด</th>
+             <th>วันที่ซื้อมา</th>
+            <th>แก้ไขข้อมูล</th>
            
           </tr>
          <?php foreach($rows as $row){ ?>
