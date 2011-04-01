@@ -125,7 +125,7 @@ body>#witti {height:auto;}
 #content form fieldset {padding:10px 20px; _padding-top:0; border:1px solid #e0e0e0;}
 #content form fieldset legend {padding:0 10px; _margin-bottom:10px;}
 #content form fieldset input, #content fieldset select {margin-top:3px; margin-bottom:10px;}
-#content form fieldset textarea {width:95%;}
+
 #content form fieldset label input {margin-bottom:0;}
 #content form p.submit input {padding:0 10px; margin-bottom:0;}
 
@@ -213,4 +213,11 @@ background:#fff1ec url('../img/error.gif') center left no-repeat;}
 #content table#list th.delete
 {
 	width: 50px;
+}
+.width800{
+width: 800px;
+}
+.height100
+{
+	height: 100px;
 }

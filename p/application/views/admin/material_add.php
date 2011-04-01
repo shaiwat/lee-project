@@ -1,5 +1,49 @@
       <h1>ครุภัณฑ์</h1>
 
+
+
+  <?php form_head("admin/company_add","เพิ่มครุภัณใหม่") ?>
+          <?php text_field("material_name","ชื่อบริษัท",null,0); ?>
+          <?php text_field("code","รหัสครุภัณ์",null,0); ?>
+          <?php text_field("brand","ยี้ห้อ",null,0); ?>
+          <?php text_field("buy_date","วันที่ซื้อ",null,1,"date"); ?>
+          <?php text_field("model","รุ่น",null,0); ?>
+          <?php text_field("price","ราคาซื้อ",null,0); ?>
+         
+         	<?php 
+		 $rows =  $this->db->query("select budget_id, concat(budget_name,'-', year) as budget_name from budgets")->result_array();
+		 select_field("budget_id","ชนิดงบประมาณ",$rows,"budget_name",null,0); 
+		 ?>
+		<?php 
+		 $rows =  $this->db->get("place")->result_array();
+		 select_field("place_id","ชือสถานที่ห้อง จัดสรร",$rows,"place_name",null,0); 
+		 ?>
+		
+		      	<?php 
+		 $rows =  $this->db->get("material_categories")->result_array();
+		 select_field("category_id","หมวด",$rows,"category_name",null,0); 
+		 ?>
+		
+		      	<?php 
+		 $rows =  $this->db->query("select company_id,concat(company_name,':',address)as company_name from company")->result_array();
+		 select_field("company_id","บริษัทที่ซื้อมา",$rows,"company_name",null,0); 
+		 ?>
+		<?php area_field("detail","รายละเอียด",null,1,"width800 height100"); ?>
+          <?php form_footer(); ?>
+    
+          
+		
+         
+
+
+
+
+
+
+
+
+      <?php /* ?>
+      
         <form name="myform" class="form" method="post" action="<?php echo site_url("admin/material_add");  ?>">
          <?php echo  validation_errors('<div class="error"> <span class="strong"></span>', '</div>'); ?>
         <fieldset>
@@ -115,5 +159,5 @@ function upFile(id,field)
 </script>
    
       
-
+<? */ ?>
    

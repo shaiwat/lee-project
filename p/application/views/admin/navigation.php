@@ -34,7 +34,12 @@
           		
           	</ul>
           </li>
-         
+         <li><a href="<?php echo site_url("admin/room"); ?>">รายการสถานที่/ห้อง</a>
+          	<ul>
+          		<li><a href="<?php echo site_url("admin/room_add"); ?>">เพิ่มสถานที่/ห้อง</a></li>
+          		
+          	</ul>
+          </li>
           <li><a href="<?php echo site_url("admin/users"); ?>">จัดการผู้ใช้งาน</a>
           <ul>
               <li><a href="<?php echo site_url("admin/user_add"); ?>">เพิ่มผู้ใช้งานใหม่</a></li>
