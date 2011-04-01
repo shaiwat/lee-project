@@ -17,7 +17,7 @@
            <?php foreach($header as $row)
            { ?>
            	
- 			 <td>
+ 			 <td class="<?php echo $row["class"]; ?>">
  			 <?php 
  			 
  			 if($row["label"]=="แก้ไข")
