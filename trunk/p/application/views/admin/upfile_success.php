@@ -14,38 +14,29 @@
 <script type="text/javascript" src="<?php  echo base_url(); ?>include/jquery/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="<?php  echo base_url(); ?>include/jquery/js/jquery-ui-1.8.2.custom.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>html/admin/design/styles/default.css" media="screen, projection, tv" type="text/css" />
-<link rel="stylesheet" href="<?php echo base_url(); ?>html/admin/design/styles/print.css" media="print" type="text/css" />
+
 <script type="text/javascript" src="<?php  echo base_url(); ?>include/jquery/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="<?php  echo base_url(); ?>include/jquery/js/jquery-ui-1.8.2.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php  echo base_url(); ?>imgareaselect/css/imgareaselect-default.css" /> 
+<script type="text/javascript" src="<?php  echo base_url(); ?>imgareaselect/scripts/jquery.min.js"></script>
+ <script type="text/javascript" src="<?php  echo base_url(); ?>imgareaselect/scripts/jquery.imgareaselect.pack.js"></script> 
+<script langauge="javascript">
+$(document).ready(function () { $('#ladybug').imgAreaSelect({ onSelectEnd: function (img, selection) { $('input[name=x1]').val(selection.x1); $('input[name=y1]').val(selection.y1); $('input[name=x2]').val(selection.x2); $('input[name=y2]').val(selection.y2); } }); });
+
+function post_value(){
+opener.document.myform.<?php echo $field; ?>.value = '<?php echo $file_name; ?>';
+self.close();
+}
+</script>
 </head>
-<body>
+<body onload="post_value();" >
 
-      
-        <form class="form" method="post" action="<?php echo site_url("file/upload/$field");   ?>" enctype='multipart/form-data' >
-         <?php echo  validation_errors('<div class="error"> <span class="strong"></span>', '</div>'); ?>
-       <?php if(isset($error["error"])){ echo $error["error"];}; ?>
-       
-          <div class="field"  >
-          <label for="">รูป:</label><br/>
-         
-		 <input type="file"    name="file_field" value="<?php //echo set_value("pcat_name_th",""); ?>"><br>
-		 </div>
-		 
-		
-		<div style="crener"></div>
-		 <div class="field"  >
-		
-         
-		 <input type="hidden""  name="detail"  value="<?php echo set_value("pcat_name_en",""); ?>" /><br>
-		 </div>
-		     <div class="cleaner"></div>
-		 
-        <p class="submit"><input type="submit" value="อับโหลด"></p>
-        </form>
-       
+<img src="<?php echo base_url()."uploads/".$file_name; ?>" />
+
 
       
 
+<input type="button" onclick="post_value();" />
 
 </body>
 </html>

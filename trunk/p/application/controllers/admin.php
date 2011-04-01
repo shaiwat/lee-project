@@ -339,27 +339,21 @@ class admin extends Controller {
 	{
 		
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			$this->form_validation->set_rules('material_name_th',  'ชื่อสินค้าภาษาไทย', 'trim|required');
-			$this->form_validation->set_rules('material_name_en', 'ชื่อสินค้า English', 'trim|required');
-			$this->form_validation->set_rules('material_code', 'รหัสสินค้า', 'trim');
-			$this->form_validation->set_rules('category_id', 'หมวดสินค้า', 'trim|required');
-			$this->form_validation->set_rules('brand', '', 'trim');
+			$this->form_validation->set_rules('name',  'ชื่อ', 'trim|required');
+			
+			$this->form_validation->set_rules('category_id', 'หมวดสินค้า', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('budget_id', 'ชนิดงบประมาณ', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('company_id', 'บริษัท', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('place_id', 'ชื่อสถานที่', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('code', '', 'trim|required');
+			$this->form_validation->set_rules('brand', '', 'trim|required');
 			$this->form_validation->set_rules('model', '', 'trim');
-			$this->form_validation->set_rules('material_status', 'หมวดสินค้า', 'trim|required');
-			$this->form_validation->set_rules('sort_order', '', 'trim|required');
-			$this->form_validation->set_rules('excerpt_th', '', 'trim|required');
-			$this->form_validation->set_rules('excerpt_en', '', 'trim|required');
-			$this->form_validation->set_rules('detail_th', '', 'trim|required');
-			$this->form_validation->set_rules('detail_en', '', 'trim|required');
-			$this->form_validation->set_rules('keyword', '', 'trim|required');
-			$this->form_validation->set_rules('youtube', 'youtube', 'trim');
-			$this->form_validation->set_rules('price', 'price', 'trim');
-			$this->form_validation->set_rules('is_publish', '', 'trim');
-			$this->form_validation->set_rules('image1', '', 'trim');
-			$this->form_validation->set_rules('image2', '', 'trim');
-			$this->form_validation->set_rules('image3', '', 'trim');
-			$this->form_validation->set_rules('image4', '', 'trim');
-			$this->form_validation->set_rules('data_sheet', '', 'trim');
+			$this->form_validation->set_rules('buy_price', '', 'trim');
+			$this->form_validation->set_rules('buy_date', '', 'trim');
+			$this->form_validation->set_rules('detail', '', 'trim');
+			$this->form_validation->set_rules('thumbnail', '', 'trim');
+			$this->form_validation->set_rules('warranty', '', 'trim');
+			
 			if ($this->form_validation->run() == FALSE)
 			{
 				$this->template->load('admin/themes',"admin/material_add",null);
