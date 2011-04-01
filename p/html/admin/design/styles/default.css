@@ -217,6 +217,10 @@ background:#fff1ec url('../img/error.gif') center left no-repeat;}
 .width800{
 width: 800px;
 }
+.form .field input.width800
+{
+	width:800px;
+}
 .height100
 {
 	height: 100px;
