@@ -19,7 +19,7 @@ function text_field($name,$label,$row=array(),$cleaner = 0,$class="")
   	 $data["class"] = $class;
 	 $CI->load->view("text_field",$data);
 }
-function area_field($name,$label,$row,$cleaner = 0,$class)
+function area_field($name,$label,$row,$cleaner = 0,$class="width800 height100")
 {
   	 $CI =& get_instance();	
 	$data["default"] ="";
@@ -37,10 +37,10 @@ function area_field($name,$label,$row,$cleaner = 0,$class)
   	  $data["class"] = $class;
 	 $CI->load->view("area_field",$data);
 }
-function image_field($name,$label,$row,$cleaner = 0,$class)
+function image_field($name,$label,$row,$cleaner = 0,$class="")
 {
 	
-	
+	 $CI =& get_instance();	
   	$data["default"] ="";
   	if(count($row))
 	{

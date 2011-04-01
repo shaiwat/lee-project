@@ -14,6 +14,7 @@
 
 <link rel="shortcut icon" href="<?php echo base_url(); ?>html/admin/design/img/favicon.ico" type="image/x-icon" />
 <script type="text/javascript" src="<?php  echo base_url(); ?>include/jquery/js/jquery-1.4.2.min.js"></script>
+<link type="text/css" href="include/jquery/css/ui-lightness/jquery-ui-1.8.2.custom.css" rel="stylesheet" />	
 <script type="text/javascript" src="<?php  echo base_url(); ?>include/jquery/js/jquery-ui-1.8.2.custom.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url(); ?>html/admin/design/styles/default.css" media="screen, projection, tv" type="text/css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>html/admin/design/styles/print.css" media="print" type="text/css" />
@@ -23,10 +24,16 @@
 
 $(function() {
 		
-		$(".datepicker").datepicker();
+		$(".date").datepicker();
 		
 		
 	});
+
+function upfile(field)
+{
+    mywindow = window.open("<?php echo site_url("file/upload"); ?>/"+field, "mywindow", "");
+    //mywindow.moveTo(100, 100);
+}
 	</script>
 </head>
 <body>
