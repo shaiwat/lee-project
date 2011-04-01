@@ -2,7 +2,7 @@
 <?php function get_thumbail($file)
 {
 		if(!($file["image1"]=="")){
-		return '<img src="'.base_url().'/timthumb.php?src=uploads/'.$file['image1'].'&w=35&h=35&zc=1" alt="" />';
+		return '<img src="'.base_url().'/timthumb.php?src=uploads/'.$file['image1'].'&w=65&h=50&zc=1" alt="" />';
 		}
 	
 }
@@ -22,14 +22,14 @@
            
           </tr>
          <?php foreach($rows as $row){ ?>
-          <tbody>
+          
           <tr >
             <td class="left"><?php echo get_thumbail($row) ?></td>
-            <td><?php echo $row['product_name_th'] ?></td>
-            <td><?php echo $row['brand'] ?></td>
-            <td><?php echo $row['pcat_name_th'] ?></td>
-            <td><?php echo $row['is_publish']; ?></td>
-            <td><a href="<?php echo site_url("admin/product_edit/".$row['product_id']); ?>"><strong>edit</strong></a></td>
+            <td><?php echo $row['code'] ?></td>
+            <td><?php echo $row['name'] ?></td>
+            <td><?php echo $row['category_name'] ?></td>
+            <td><?php echo $row['buy_date']; ?></td>
+            <td><a href="<?php echo site_url("admin/material_edit/".$row['material_id']); ?>"><strong>edit</strong></a></td>
             
           </tr>
           <?php } ?>

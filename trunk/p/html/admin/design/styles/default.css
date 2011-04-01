@@ -182,3 +182,31 @@ background:#fff1ec url('../img/error.gif') center left no-repeat;}
        cursor: pointer;
        cursor: hand;
       }
+.required input 
+{
+  border: 1px solid red;
+}
+#content table#list th.width50
+{
+	width: 50px;
+}
+#content table#list th.width100
+{
+	width: 100px;
+}
+#content table#list th.width150
+{
+	width: 150px;
+}
+#content table#list th.width200
+{
+	width: 150px;
+}
+#content table#list th.edit
+{
+	width: 50px;
+}
+#content table#list th.delete
+{
+	width: 50px;
+}

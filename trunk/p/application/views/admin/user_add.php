@@ -5,7 +5,7 @@
          <?php echo  validation_errors('<div class="error"> <span class="strong"></span>', '</div>'); ?>
         <fieldset>
         
-          <legend>เพิ่มใช้งานใหม่</legend>
+          <legend>เพิ่มผู้ใช้งานใหม่</legend>
           <div class="field">
           <label >ชื่อผู้ใช้งาน:</label><br>
          

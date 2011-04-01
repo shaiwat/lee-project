@@ -51,7 +51,7 @@ $autoload['libraries'] = array("database","Template","form_validation","validati
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array("url","path","date","file","form");
+$autoload['helper'] = array("url","path","date","file","form","myform","mytable");
 
 
 /*
