@@ -8,7 +8,7 @@ class admin extends Controller {
 		date_default_timezone_set ("Asia/Bangkok"); 	
 		if(!$this->user->is_login())
 		{
-			//redirect('login', 'location'); 
+			redirect('login', 'location'); 
 		}
 		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
 		$this->form_validation->set_message('is_natural_no_zero', 'กรุณาระบุ %s');
