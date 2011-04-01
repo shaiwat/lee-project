@@ -184,7 +184,11 @@ background:#fff1ec url('../img/error.gif') center left no-repeat;}
       }
 .required input 
 {
-  border: 1px solid red;
+  border: 2px solid red;
+}
+.required select 
+{
+  border: 2px solid red;
 }
 #content table#list th.width50
 {
