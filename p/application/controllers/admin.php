@@ -8,13 +8,20 @@ class admin extends Controller {
 		date_default_timezone_set ("Asia/Bangkok"); 	
 		if(!$this->user->is_login())
 		{
-			redirect('login', 'location'); 
+			//redirect('login', 'location'); 
 		}
 		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
 		$this->form_validation->set_message('is_natural_no_zero', 'กรุณาระบุ %s');
 		//$this->output->enable_profiler(TRUE);
 	}
-	
+	function csv()
+	{
+		$this->load->dbutil();
+
+		$query = $this->db->query("SELECT * FROM roles");
+		
+		echo $this->dbutil->csv_from_result($query); 
+	}
 	function room_add()
 	{
 			$this->form_validation->set_rules('place_name',  'ชื่อห้อง', 'trim|required');
@@ -36,7 +43,26 @@ class admin extends Controller {
 	}
 	function room_edit($id)
 	{
-		
+			$this->form_validation->set_rules('place_name',  'ชื่อห้อง', 'trim|required');
+			
+			$this->db->where("place_id",$id);
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$rows = $this->db->get("place")->result_array();
+				$data["row"] = $rows[0];
+				$this->template->load('admin/themes',"admin/room_edit",$data);
+			
+			}
+			else
+			{ 	
+				
+				$this->db->update("place",$_POST);
+				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+				
+				redirect('admin/room', 'location');
+				
+			}
 	}
 	function room_delete($id)
 	{
