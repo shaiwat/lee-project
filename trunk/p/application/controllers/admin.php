@@ -10,190 +10,51 @@ class admin extends Controller {
 		{
 			redirect('login', 'location'); 
 		}
-		
+		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		$this->form_validation->set_message('is_natural_no_zero', 'กรุณาระบุ %s');
 		//$this->output->enable_profiler(TRUE);
 	}
-	function download_add()
-	{
-		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			
-			$this->form_validation->set_rules('is_publish', '', 'trim');
-			$this->form_validation->set_rules('thumbnail', '', 'trim');
-			$this->form_validation->set_rules('title_th', '', 'trim|required');
-			$this->form_validation->set_rules('title_en', '', 'trim|required');
-			$this->form_validation->set_rules('detail_th', '', 'trim');
-			$this->form_validation->set_rules('detail_en', '', 'trim');
-			$this->form_validation->set_rules('file_path', '', 'trim|required');
-			
-			if ($this->form_validation->run() == FALSE)
-			{
-				$this->template->load('admin/themes',"admin/download_add",null);
-			}
-			else
-			{ 	
-				$this->db->insert("downloads",$_POST);
-				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-				$this->fs->save_log();	
-				//echo $this->db->truncate(); 
-				redirect('admin/downloads', 'location');
-			}
-		
-	}
-	function download_edit($id)
-	{
-	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			
-			$this->form_validation->set_rules('is_publish', '', 'trim');
-			$this->form_validation->set_rules('thumbnail', '', 'trim');
-			$this->form_validation->set_rules('title_th', '', 'trim|required');
-			$this->form_validation->set_rules('title_en', '', 'trim|required');
-			$this->form_validation->set_rules('detail_th', '', 'trim');
-			$this->form_validation->set_rules('detail_en', '', 'trim');
-			$this->form_validation->set_rules('file_path', '', 'trim|required');
-			$this->db->where("download_id",$id);
-			if ($this->form_validation->run() == FALSE)
-			{
-				$data["row"] = $this->db->get("downloads")->result_array();
-				$this->template->load('admin/themes',"admin/download_edit",$data);
-			}
-			else
-			{ 	
-				$this->db->update("downloads",$_POST);
-				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-				$this->fs->save_log();	
-				//echo $this->db->truncate(); 
-				redirect('admin/downloads', 'location');
-			}
-	}
-	function download_delete($id)
-	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			
-			$this->form_validation->set_rules('download_id', '', 'trim');
-		
-			$this->db->where("download_id",$id);
-			if ($this->form_validation->run() == FALSE)
-			{
-				$data["row"] = $this->db->get("downloads")->result_array();
-				$this->template->load('admin/themes',"admin/download_delete",$data);
-			}
-			else
-			{ 	
-				$this->db->delete("downloads");
-				$this->user->set_message("","ลบเรียบร้อยแล้ว","success");	
-				$this->fs->save_log();	
-				
-				redirect('admin/downloads', 'location');
-			}
-	}
-	function showcase($offset = 0)
-	{
-		
-		$sql = "select * from showcases"; 
-		$base = "admin/showcase";
-		
-		$this->_page_query($sql,$base,"admin/showcases",$offset,array(),true,50);
 	
-	
-	}
-	function showcase_add()
+	function room_add()
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+			$this->form_validation->set_rules('place_name',  'ชื่อห้อง', 'trim|required');
 			
-			$this->form_validation->set_rules('title_th',  '', 'trim|required');
-			$this->form_validation->set_rules('title_en', '', 'trim|required');
-
-			$this->form_validation->set_rules('sort_order', '', 'trim|required');
-			$this->form_validation->set_rules('excerpt_th', '', 'trim|required');
-			$this->form_validation->set_rules('excerpt_en', '', 'trim|required');
-			$this->form_validation->set_rules('detail_th', '', 'trim|required');
-			$this->form_validation->set_rules('detail_en', '', 'trim|required');
-			$this->form_validation->set_rules('keyword', '', 'trim|required');
-			$this->form_validation->set_rules('youtube', 'youtube', 'trim');
-		
-			$this->form_validation->set_rules('is_publish', '', 'trim');
-			$this->form_validation->set_rules('image1', '', 'trim');
-			$this->form_validation->set_rules('image2', '', 'trim');
-			$this->form_validation->set_rules('image3', '', 'trim');
-			$this->form_validation->set_rules('image4', '', 'trim');
-			$this->form_validation->set_rules('data_sheet', '', 'trim');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
-				$this->template->load('admin/themes',"admin/showcase_add",null);
+				$this->template->load('admin/themes',"admin/room_add");
+			
 			}
 			else
 			{ 	
-				$this->db->insert("showcases",$_POST);
+				$this->db->insert("place",$_POST);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
-				$this->fs->save_log();		
-				redirect('admin/showcase', 'location');
+				
+				redirect('admin/room', 'location');
 				
 			}
 	}
-	function showcase_edit($id)
+	function room_edit($id)
 	{
-		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			
-			$this->form_validation->set_rules('title_th',  '', 'trim|required');
-			$this->form_validation->set_rules('title_en', '', 'trim|required');
-
-			$this->form_validation->set_rules('sort_order', '', 'trim|required');
-			$this->form_validation->set_rules('excerpt_th', '', 'trim|required');
-			$this->form_validation->set_rules('excerpt_en', '', 'trim|required');
-			$this->form_validation->set_rules('detail_th', '', 'trim|required');
-			$this->form_validation->set_rules('detail_en', '', 'trim|required');
-			$this->form_validation->set_rules('keyword', '', 'trim|required');
-			$this->form_validation->set_rules('youtube', 'youtube', 'trim');
 		
-			$this->form_validation->set_rules('is_publish', '', 'trim');
-			$this->form_validation->set_rules('image1', '', 'trim');
-			$this->form_validation->set_rules('image2', '', 'trim');
-			$this->form_validation->set_rules('image3', '', 'trim');
-			$this->form_validation->set_rules('image4', '', 'trim');
-			$this->form_validation->set_rules('data_sheet', '', 'trim');
-			
-			if ($this->form_validation->run() == FALSE)
-			{
-				$this->db->where("showcase_id",$id);
-				$data["showcase"] = $this->db->get("showcases")->result_array();
-				$this->template->load('admin/themes',"admin/showcase_edit",$data);
-			}
-			else
-			{ 	
-				$this->db->where("showcase_id",$id);
-				$this->db->update("showcases",$_POST);
-				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
-				$this->fs->save_log();		
-				redirect('admin/showcase', 'location');
-				
-			}
 	}
-	function showcase_delete($id)
+	function room_delete($id)
 	{
-		
-	$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-			
-			
-			
-			$this->form_validation->set_rules('showcase_id', '', 'trim');
-			
-			if ($this->form_validation->run() == FALSE)
-			{
-				$this->db->where("showcase_id",$id);
-				$data["showcase"] = $this->db->get("showcases")->result_array();
-				$this->template->load('admin/themes',"admin/showcase_delete",$data);
-			}
-			else
-			{ 	
-				$this->db->where("showcase_id",$id);
-				$this->db->delete("showcases");
-				$this->user->set_message("","ลบเรียบร้อยแล้ว","success");
-				$this->fs->save_log();		
-				redirect('admin/showcase', 'location');
-				
-			}
-	} 
+	}
+	function room()
+	{
+		$header =
+		 array( 
+			  array("class"=>"left","name"=>"place_name","label"=>"ชื่อห้อง/สถานที่"),
+			 
+			  array("class"=>"center edit","name"=>"place_id","label"=>"แก้ไข"),
+			  array("class"=>"center delete","name"=>"place_id","label"=>"ลบ")
+	 			);
+		$rows = $this->db->query("select * from place")->result_array();
+		$data["header"] = $header; 
+		$data["rows"] = $rows;
+		$this->template->load('admin/themes',"admin/room",$data);
+	}
 	
 	function _page_query($sql,$base,$view="",$offset=0,$data= array(),$show =true,$limit = 9)
 	{
@@ -291,14 +152,14 @@ class admin extends Controller {
 	}
 	function user_add()
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+			
 			$this->form_validation->set_rules('username',  'ชื่อผู้ใช้งาน', 'trim|required');
 			$this->form_validation->set_rules('password', 'รหัสผ่าน', 'trim|required');
 			$this->form_validation->set_rules('firstname', 'ชื่อ', 'trim|required');
 			$this->form_validation->set_rules('lastname', 'นามสกุล', 'trim|required');
 			$this->form_validation->set_rules('position', 'ตำแหน่ง', 'trim');
 			$this->form_validation->set_rules('email', 'อีเมล์', 'trim|required');
-			$this->form_validation->set_rules('role_id', 'ระดับผู้ใช้งาน', 'trim|required');
+			$this->form_validation->set_rules('role_id', 'ระดับผู้ใช้งาน', 'trim|required|is_natural_no_zero');
 			
 			if ($this->form_validation->run() == FALSE)
 			{
@@ -554,11 +415,21 @@ class admin extends Controller {
 	
 	function budgets()
 	{
-		$this->template->load('admin/themes',"admin/budget",null);
+		$header =
+		 array( 
+			  array("class"=>"left width200","name"=>"budget_name","label"=>"ชื่องบประมาณ"),
+			  array("class"=>"left","name"=>"year","label"=>"ปีการศึกษา"),
+			  array("class"=>"center edit","name"=>"budget_id","label"=>"แก้ไข"),
+			  array("class"=>"center delete","name"=>"budget_id","label"=>"ลบ")
+	 			);
+		$rows = $this->db->query("select * from budgets")->result_array();
+		$data["header"] = $header; 
+		$data["rows"] = $rows;
+		$this->template->load('admin/themes',"admin/budget",$data);
 	}
 	function budget_add()
 	{
-			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+			
 			$this->form_validation->set_rules('budget_name',  'ชื่อชนิดงบประมาณ', 'trim|required');
 			$this->form_validation->set_rules('year',  'ปีการศึกษา', 'trim|required');
 			
@@ -579,7 +450,27 @@ class admin extends Controller {
 	}
 	function budget_edit($id)
 	{
-		
+			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+			$this->form_validation->set_rules('budget_name',  'ชื่อชนิดงบประมาณ', 'trim|required');
+			$this->form_validation->set_rules('year',  'ปีการศึกษา', 'trim|required');
+			
+			
+			$this->db->where("budget_id",$id);
+			
+				if ($this->form_validation->run() == FALSE)
+				{
+					$rows = $this->db->get("budgets")->result_array();
+					$data["row"] = $rows[0];
+					$this->template->load('admin/themes',"admin/budget_edit",$data);
+				}
+				else
+				{ 	
+					$this->db->insert("budgets",$_POST);
+					$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+					
+					redirect('admin/budgets', 'location');
+					
+				}
 	}
 	function budget_delete($id)
 	{
@@ -628,7 +519,7 @@ class admin extends Controller {
 	function company_edit($id)
 	{
 		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
-		$this->form_validation->set_rules('company_name',  'ชื่อบรริษัท', 'trim|required');
+		$this->form_validation->set_rules('company_name',  'ชื่อบริษัท', 'trim|required');
 		$this->form_validation->set_rules('address',  '', 'trim');
 		$this->form_validation->set_rules('tel',  '', 'trim');
 		$this->form_validation->set_rules('fax',  '', 'trim');

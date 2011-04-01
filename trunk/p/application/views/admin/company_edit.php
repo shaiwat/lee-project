@@ -1,7 +1,7 @@
 
         <h1>บริษัท</h1>
 
-		  <?php form_head("admin/company_add","แก้ไขบริษัท") ?>
+		  <?php form_head("admin/company_edit/".$row["company_id"],"แก้ไขบริษัท") ?>
           <?php text_field("company_name","ชื่อบริษัท",$row,1); ?>
           <?php text_field("tel","เบอร์โทร",$row,1); ?>
           <?php text_field("fax","เบอร์FAx",$row,1); ?>

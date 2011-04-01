@@ -4,8 +4,8 @@ function text_field($name,$label,$row=array(),$cleaner = 0)
 {
   	 $CI =& get_instance();	
 	
-  	$data
-  	if(count($default))
+  	$data["default"] ="";
+  	if(count($row))
 	{
   	 $data["default"] = $row[$name];
 	}
@@ -18,10 +18,18 @@ function text_field($name,$label,$row=array(),$cleaner = 0)
   	 $data["cleaner"] = $cleaner;
 	 $CI->load->view("text_field",$data);
 }
-function area_field($name,$label,$default="",$cleaner = 0)
+function area_field($name,$label,$row,$cleaner = 0)
 {
   	 $CI =& get_instance();	
-  	 $data["default"] = $default;
+	$data["default"] ="";
+  	if(count($row))
+	{
+  	 $data["default"] = $row[$name];
+	}
+	else 
+	{
+		$data["default"] ="";
+	}
   	 $data["name"] = $name;
   	 $data["label"] = $label;
   	 $data["cleaner"] = $cleaner;
@@ -39,4 +47,24 @@ function form_footer()
 	$CI =& get_instance();	
   	
   	$CI->load->view("form_footer");
+}
+function select_field($name,$label,$rows,$label_value,$row,$cleaner = 0)
+{
+	 $CI =& get_instance();	
+	
+  	$data["default"] ="";
+  	if(count($row))
+	{
+  	 $data["default"] = $row[$name];
+	}
+	else 
+	{
+		$data["default"] ="";
+	}
+  	 $data["rows"] = $rows;
+	 $data["name"] = $name;
+  	 $data["label"] = $label;
+  	 $data["cleaner"] = $cleaner;
+  	 $data["label_value"] = $label_value;
+	 $CI->load->view("select_field",$data);
 }
