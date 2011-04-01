@@ -440,7 +440,7 @@ class admin extends Controller {
 		$condition = " and p.category_id = ".$filter["category_id"];
 		
 		}*/
-		$sql = "select * from materials"; 
+		$sql = "select * from materials m left join material_categories c on m.category_id = c.category_id "; 
 		$base = "admin/materials";
 		
 		$this->_page_query($sql,$base,"admin/materials",$offset,array(),true,50);
@@ -552,13 +552,30 @@ class admin extends Controller {
 		
 	}
 	
-	function budget()
+	function budgets()
 	{
 		$this->template->load('admin/themes',"admin/budget",null);
 	}
 	function budget_add()
 	{
-		
+			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+			$this->form_validation->set_rules('budget_name',  'ชื่อชนิดงบประมาณ', 'trim|required');
+			$this->form_validation->set_rules('year',  'ปีการศึกษา', 'trim|required');
+			
+			
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->template->load('admin/themes',"admin/budget_add",null);
+			}
+			else
+			{ 	
+				$this->db->insert("budgets",$_POST);
+				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+				
+				redirect('admin/budgets', 'location');
+				
+			}
 	}
 	function budget_edit($id)
 	{
@@ -571,7 +588,18 @@ class admin extends Controller {
 	
 	function company()
 	{
-			$this->template->load('admin/themes',"admin/company",null);
+
+		$header =
+		 array( 
+			  array("class"=>"left width200","name"=>"company_name","label"=>"ชื่อบริษัท"),
+			  array("class"=>"left","name"=>"address","label"=>"ที่อยู่"),
+			  array("class"=>"center edit","name"=>"company_id","label"=>"แก้ไข"),
+			  array("class"=>"center delete","name"=>"company_id","label"=>"ลบ")
+	 			);
+		$rows = $this->db->query("select * from company")->result_array();
+		$data["header"] = $header; 
+		$data["rows"] = $rows;
+		$this->template->load('admin/themes',"admin/company",$data);
 	}
 	function company_add()
 	{
@@ -599,6 +627,31 @@ class admin extends Controller {
 	}
 	function company_edit($id)
 	{
+		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+		$this->form_validation->set_rules('company_name',  'ชื่อบรริษัท', 'trim|required');
+		$this->form_validation->set_rules('address',  '', 'trim');
+		$this->form_validation->set_rules('tel',  '', 'trim');
+		$this->form_validation->set_rules('fax',  '', 'trim');
+		$this->form_validation->set_rules('email',  '', 'trim');
+		
+		
+		$this->db->where("company_id",$id);
+		if ($this->form_validation->run() == FALSE)
+		{
+			$rows = $this->db->get("company")->result_array();
+			$data["row"] = $rows[0];
+			$this->template->load('admin/themes',"admin/company_edit",$data);
+		}
+		else
+		{ 	
+			
+			$this->db->update("company",$_POST);
+			
+			$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+			
+			redirect('admin/company', 'location');
+			
+		}
 	}
 	function compay_delete($id)
 	{

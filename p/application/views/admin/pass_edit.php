@@ -5,9 +5,9 @@
          <?php echo  validation_errors('<div class="error"> <span class="strong"></span>', '</div>'); ?>
         <fieldset>
         
-          <legend>เพิ่มใช้งานใหม่</legend>
+          <legend>แก้ไขรหัสผ่าน</legend>
           <div class="field">
-          <label >Username:</label><br>
+          <label >ชื่อผู้ใช้งาน:</label><br>
          
 		 <input type="text" name="username" value="<?php echo set_value("username",$user[0]["username"]); ?>"><br>
 		 </div>

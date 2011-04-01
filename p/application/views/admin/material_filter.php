@@ -3,7 +3,7 @@
           <legend>กรองข้อมูล</legend>
          
          <div class="field">
-          หมวดวัสดครุภุณฑ์<br>
+          หมวดวัสดุครุภุณฑ์<br>
           <?php $cats = $this->db->query("select * from material_categories")->result_array();  ?>
           <select style="float:left;width:200px;"  name="cat_id">
             <option value="0">All</option>
