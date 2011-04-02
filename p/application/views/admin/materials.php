@@ -1,8 +1,8 @@
 
 <?php function get_thumbail($file)
 {
-		if(!($file["image1"]=="")){
-		return '<img src="'.base_url().'/timthumb.php?src=uploads/'.$file['image1'].'&w=65&h=50&zc=1" alt="" />';
+		if(!($file["thumbnail"]=="")){
+		return '<img src="'.base_url().'/timthumb.php?src=uploads/'.$file['thumbnail'].'&w=65&h=50&zc=1" alt="" />';
 		}
 	
 }
