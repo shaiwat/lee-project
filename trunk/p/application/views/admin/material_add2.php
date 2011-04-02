@@ -1,10 +1,10 @@
-      <h1>ครุภัณฑ์</h1>
+      <h1>วัสดุ</h1>
 
 
 
-  <?php form_head("admin/material_add","เพิ่มครุภัณใหม่") ?>
+  <?php form_head("admin/material_add2","เพิ่มวัสดุใหม่") ?>
           <?php text_field("name","ชื่อบริษัท",null,0); ?>
-          <?php text_field("code","รหัสครุภัณ์",null,0); ?>
+          
           <?php text_field("brand","ยี้ห้อ",null,1); ?>
           <?php text_field("buy_date","วันที่ซื้อ",null,0,"date"); ?>
           <?php text_field("model","รุ่น",null,0); ?>
@@ -36,5 +36,3 @@
 		<?php form_footer(); ?>
           
           
-    
-      

@@ -335,6 +335,44 @@ class admin extends Controller {
 		//$data["materials"]= $this->db->query("select * from materials p left join material_categories c on c.category_id = p.category_id ")->result_array();
 		//$this->template->load('admin/themes',"admin/materials",$data);
 	}
+	function material_add2()
+	{
+	
+			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+			$this->form_validation->set_rules('name',  'ชื่อ', 'trim|required');
+			
+			$this->form_validation->set_rules('category_id', 'หมวดสินค้า', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('budget_id', 'ชนิดงบประมาณ', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('company_id', 'บริษัท', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('place_id', 'ชื่อสถานที่', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('code', 'เลขที่ครุภัณฑ์', 'trim|required');
+			$this->form_validation->set_rules('brand', 'ยีห้อ', 'trim|required');
+			$this->form_validation->set_rules('model', '', 'trim');
+			$this->form_validation->set_rules('buy_price', 'ราคาซื้อ', 'trim');
+			$this->form_validation->set_rules('buy_date', 'วันที่ซื้อ', 'trim');
+			$this->form_validation->set_rules('detail', '', 'trim');
+			$this->form_validation->set_rules('thumbnail', '', 'trim');
+			$this->form_validation->set_rules('warranty', '', 'trim');
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->template->load('admin/themes',"admin/material_add2",null);
+			}
+			else
+			{ 	
+				$query = $_POST;
+				$query['type_id'] = 1;
+				$query['last_modify'] =date("y/m/d H:i:s");
+				$query['create_date'] =date("y/m/d H:i:s");
+				
+				$this->db->insert("materials2",$query);
+				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
+				
+				redirect('admin/materials', 'location');
+			}
+		
+	
+	}
 	function material_add()
 	{
 		
@@ -345,11 +383,11 @@ class admin extends Controller {
 			$this->form_validation->set_rules('budget_id', 'ชนิดงบประมาณ', 'trim|required|is_natural_no_zero');
 			$this->form_validation->set_rules('company_id', 'บริษัท', 'trim|required|is_natural_no_zero');
 			$this->form_validation->set_rules('place_id', 'ชื่อสถานที่', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('code', '', 'trim|required');
-			$this->form_validation->set_rules('brand', '', 'trim|required');
+			$this->form_validation->set_rules('code', 'เลขที่ครุภัณฑ์', 'trim|required');
+			$this->form_validation->set_rules('brand', 'ยีห้อ', 'trim|required');
 			$this->form_validation->set_rules('model', '', 'trim');
-			$this->form_validation->set_rules('buy_price', '', 'trim');
-			$this->form_validation->set_rules('buy_date', '', 'trim');
+			$this->form_validation->set_rules('buy_price', 'ราคาซื้อ', 'trim');
+			$this->form_validation->set_rules('buy_date', 'วันที่ซื้อ', 'trim');
 			$this->form_validation->set_rules('detail', '', 'trim');
 			$this->form_validation->set_rules('thumbnail', '', 'trim');
 			$this->form_validation->set_rules('warranty', '', 'trim');
@@ -360,10 +398,12 @@ class admin extends Controller {
 			}
 			else
 			{ 	
-				$this->db->insert("materials",$_POST);
+				$query = $_POST;
+				$query['type_id'] = 2;
+				$query['last_modify'] =date("y/m/d H:i:s");
+				$query['create_date'] =date("y/m/d H:i:s");
+				$this->db->insert("materials",$query);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
-				$this->fs->save_log();	
-				//echo $this->db->truncate(); 
 				redirect('admin/materials', 'location');
 			}
 		
