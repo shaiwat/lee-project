@@ -157,6 +157,7 @@ class admin extends Controller {
 				
 			}
 	}
+	
 	function category_add()
 	{
 			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
@@ -309,6 +310,12 @@ class admin extends Controller {
 	{
 		$this->template->load('admin/themes',"admin/contacts",null);
 	}
+	function material_view($id)
+	{
+		$data["contents"]=$this->p->material_view($id);
+		$this->load->view("admin/themes",$data);
+		
+	}
 	function material_filter()
 	{
 		$id = $_POST["category_id"];
@@ -327,7 +334,7 @@ class admin extends Controller {
 		$condition = " and p.category_id = ".$filter["category_id"];
 		
 		}*/
-		$sql = "select * from materials m left join material_categories c on m.category_id = c.category_id "; 
+		$sql = "select * from materials m left join material_categories c on m.category_id = c.category_id where type_id =2 "; 
 		$base = "admin/materials";
 		
 		$this->_page_query($sql,$base,"admin/materials",$offset,array(),true,50);
@@ -335,6 +342,23 @@ class admin extends Controller {
 		//$data["materials"]= $this->db->query("select * from materials p left join material_categories c on c.category_id = p.category_id ")->result_array();
 		//$this->template->load('admin/themes',"admin/materials",$data);
 	}
+	function materials2($offset=0)
+		{
+			/*$filter = $this->session->userdata("filter");
+			$condition ="";
+			if($filter["category_id"])
+			{
+			$condition = " and p.category_id = ".$filter["category_id"];
+			
+			}*/
+			$sql = "select * from materials m left join material_categories c on m.category_id = c.category_id 	where type_id = 1 "; 
+			$base = "admin/materials";
+			
+			$this->_page_query($sql,$base,"admin/materials",$offset,array(),true,50);
+			
+			//$data["materials"]= $this->db->query("select * from materials p left join material_categories c on c.category_id = p.category_id ")->result_array();
+			//$this->template->load('admin/themes',"admin/materials",$data);
+		}
 	function material_add2()
 	{
 	

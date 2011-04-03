@@ -7,7 +7,7 @@
 	
 }
 ?>
-<h1>รายการครุภัณฑ์</h1>
+<h1>รายการวัสดุ</h1>
  <?php echo $this->user->messages(); ?>
 <?php $this->load->view("admin/material_filter"); ?>
 <table id="list">
