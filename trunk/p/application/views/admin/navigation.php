@@ -3,9 +3,9 @@
  <?php if($this->user->is_login()){ ?>
  <ul>
           <li><a href="<?php echo site_url("admin"); ?>" class="active">Home</a></li>
-          <li><a href="<?php echo site_url("admin/materials"); ?>">จัดการวัสดุ</a>
+          <li><a href="<?php echo site_url("admin/materials2"); ?>">จัดการวัสดุ</a>
             <ul>
-			  <li><a href="<?php echo site_url("admin/material_add"); ?>">ลงทะเบียนวัสดใหม่</a></li>
+			  <li><a href="<?php echo site_url("admin/material_add2"); ?>">ลงทะเบียนวัสดใหม่</a></li>
  		 </ul></li>
             
              <li><a href="<?php echo site_url("admin/materials"); ?>">จัดครุภัณฑ์</a>
@@ -15,9 +15,9 @@
              
             </ul>
           </li>
-           <li><a href="<?php echo site_url("admin/materials"); ?>">จัดหมวดวัสดุครุภัณฑ์</a>
+           <li><a href="<?php echo site_url("admin/categories"); ?>">จัดหมวดวัสดุครุภัณฑ์</a>
             <ul>
-		 <li><a href="<?php echo site_url("admin/material_add"); ?>">เพิ่มหมวดใหม่</a></li>
+		 <li><a href="<?php echo site_url("admin/category_add"); ?>">เพิ่มหมวดใหม่</a></li>
             
              
             </ul>
@@ -47,7 +47,7 @@
             </ul>
           </li>
           
-            <li><a href="<?php echo site_url("admin/materials"); ?>">รายงาน</a>
+            <li><a href="<?php echo site_url("admin/report"); ?>">รายงาน</a>
          
           </li>
         </ul>  
