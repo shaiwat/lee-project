@@ -518,6 +518,53 @@ class admin extends Controller {
 				
 			}
 	}
+	function maintain_edit($id)
+	{
+			
+			$this->form_validation->set_rules('maintain_name',  'ชื่องานซ่อม', 'trim|required');
+			$this->form_validation->set_rules('remark',  '', 'trim');
+			$this->form_validation->set_rules('category_id',  'หมวด', 'trim|required');
+			
+			
+			$this->db->where("maintain_id",$id);
+			if ($this->form_validation->run() == FALSE)
+			{
+				$rows = $this->db->get("maintain")->result_array();
+				$data["row"] = $rows[0];
+				$this->template->load('admin/themes',"admin/maintain_edit",$data);
+			}
+			else
+			{ 	
+				$this->db->update("maintain",$_POST);
+				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+				
+				redirect('admin/maintains', 'location');
+				
+			}
+	}
+function maintain_delete($id)
+	{
+			
+			$this->form_validation->set_rules('maintain_id',  '', 'trim');
+			
+			
+			
+			$this->db->where("maintain_id",$id);
+			if ($this->form_validation->run() == FALSE)
+			{
+				$rows = $this->db->get("maintain")->result_array();
+				$data["row"] = $rows[0];
+				$this->template->load('admin/themes',"admin/maintain_delete",$data);
+			}
+			else
+			{ 	
+				$this->db->delete("maintain");
+				$this->user->set_message("","ลบรียบร้อยแล้ว","success");
+				
+				redirect('admin/maintains', 'location');
+				
+			}
+	}
 	function maintains()
 	{
 		$header =
@@ -525,13 +572,13 @@ class admin extends Controller {
 			  array("class"=>"left width200","name"=>"category_name","label"=>"ชื่อหมวด"),
 			  array("class"=>"left","name"=>"maintain_name","label"=>"งานซ่อม"),
 			  array("class"=>"left","name"=>"remark","label"=>"หมายเหตุ"),
-			  array("class"=>"center edit","name"=>"budget_id","label"=>"แก้ไข"),
-			  array("class"=>"center delete","name"=>"budget_id","label"=>"ลบ")
+			  array("class"=>"center edit","name"=>"maintain_id","label"=>"แก้ไข"),
+			  array("class"=>"center delete","name"=>"maintain_id","label"=>"ลบ")
 	 			);
-		$rows = $this->db->query("select * from budgets")->result_array();
+		$rows = $this->db->query("select * from maintain m left join material_categories c on c.category_id = m.category_id")->result_array();
 		$data["header"] = $header; 
 		$data["rows"] = $rows;
-		$this->template->load('admin/themes',"admin/budget",$data);
+		$this->template->load('admin/themes',"admin/maintains",$data);
 	}
 	function budgets()
 	{
