@@ -40,6 +40,13 @@
           		
           	</ul>
           </li>
+          
+           <li><a href="<?php echo site_url("admin/maintain"); ?>">รายการงานชนิดซ่อม</a>
+          	<ul>
+          		<li><a href="<?php echo site_url("admin/maintain_add"); ?>">เพิ่มชนิดงานซ่อมใหม่</a></li>
+          		
+          	</ul>
+          </li>
           <li><a href="<?php echo site_url("admin/users"); ?>">จัดการผู้ใช้งาน</a>
           <ul>
               <li><a href="<?php echo site_url("admin/user_add"); ?>">เพิ่มผู้ใช้งานใหม่</a></li>
