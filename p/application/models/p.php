@@ -8,6 +8,32 @@
         parent::Model();
         
     }
+	
+	function get_thumbail($file)
+	{
+			if(!($file["thumbnail"]=="")){
+			return '<img src="'.base_url().'/timthumb.php?src=uploads/'.$file['thumbnail'].'&w=200&h=150&zc=1" alt="" />';
+			}
+		
+	}
+	function maintain_history($id)
+	{
+		$header =
+		 array( 
+			 
+			  array("class"=>"left","name"=>"year","label"=>"วันที่แจ้งซ่อม"),
+			  array("class"=>"","name"=>"budget_id","label"=>"ชนิดงานซ่อม"),
+			   array("class"=>"","name"=>"budget_id","label"=>"อาการชำรุด"),
+			  array("class"=>"","name"=>"budget_id","label"=>"บริษัทผู้ซ่อมบำรุง"),
+			  array("class"=>"","name"=>"budget_id","label"=>"ราคาซ่อม"),
+			  array("class"=>"","name"=>"budget_id","label"=>"รับประกันงานซ่อม")
+	 			);
+		$rows = $this->db->query("select * from budgets")->result_array();
+		$data["header"] = $header; 
+		$data["rows"] = array();
+		
+		return $this->load->view("admin/history_list",$data,true);
+	}
     function material_view($id)
     {
     	$sql ="SELECT
@@ -62,15 +88,13 @@
     	array( "field"=>"วันที่ซื้อ:","detail"=>$rows[0]["buy_price"] ),
     	array( "field"=>"ราคาซื้อมา:","detail"=>$rows[0]["buy_date"] ),
     	array( "field"=>"การรับประกัน:","detail"=>$rows[0]["warranty"] ),
-    	array( "field"=>"ซื่อจากบริษัท:","detail"=>$rows[0]["company_name"]." ".$rows[0]["address"] ." ".$rows[0]["tel"] )
-
+    	array( "field"=>"ซื่อจากบริษัท:","detail"=>$rows[0]["company_name"]." ".$rows[0]["address"] ." ".$rows[0]["tel"] ),
+		array( "field"=>"รูป:","detail"=>$this->get_thumbail($rows[0]) ),
+		array( "field"=>"แจ้งซ่อม:","detail"=>"<a href=".site_url("admin/maintain_add").">แจ้งซ่อม</a>" ),
+		array( "field"=>"ประวัติงานซ่อม:","detail"=>$this->maintain_history($id["material_id"]) )
+    	
     	
     	);
-    	
-    	
-    	
-    	
-    	
     	
     	
     	
@@ -94,6 +118,7 @@
     	//$this->db->query()->result_array();
     	
 	}
+	
 	
 	
 }
