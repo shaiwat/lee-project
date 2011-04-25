@@ -69,7 +69,7 @@ function form_footer()
   	
   	$CI->load->view("form_footer");
 }
-function select_field($name,$label,$rows,$label_value,$row,$cleaner = 0)
+function select_field($name,$label,$rows,$label_value,$row,$cleaner = 0,$first_label="โปรดเลือก")
 {
 	 $CI =& get_instance();	
 	
@@ -87,5 +87,7 @@ function select_field($name,$label,$rows,$label_value,$row,$cleaner = 0)
   	 $data["label"] = $label;
   	 $data["cleaner"] = $cleaner;
   	 $data["label_value"] = $label_value;
+  	  $data["first_label"] = $first_label;
+  	  $data["row"] = $row;
 	 $CI->load->view("select_field",$data);
 }
