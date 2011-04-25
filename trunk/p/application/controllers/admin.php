@@ -354,7 +354,7 @@ class admin extends Controller {
 			$sql = "select * from materials m left join material_categories c on m.category_id = c.category_id 	where type_id = 1 "; 
 			$base = "admin/materials";
 			
-			$this->_page_query($sql,$base,"admin/materials",$offset,array(),true,50);
+			$this->_page_query($sql,$base,"admin/materials2",$offset,array(),true,50);
 			
 			//$data["materials"]= $this->db->query("select * from materials p left join material_categories c on c.category_id = p.category_id ")->result_array();
 			//$this->template->load('admin/themes',"admin/materials",$data);
@@ -369,7 +369,7 @@ class admin extends Controller {
 			$this->form_validation->set_rules('budget_id', 'ชนิดงบประมาณ', 'trim|required|is_natural_no_zero');
 			$this->form_validation->set_rules('company_id', 'บริษัท', 'trim|required|is_natural_no_zero');
 			$this->form_validation->set_rules('place_id', 'ชื่อสถานที่', 'trim|required|is_natural_no_zero');
-			$this->form_validation->set_rules('code', 'เลขที่ครุภัณฑ์', 'trim|required');
+			
 			$this->form_validation->set_rules('brand', 'ยีห้อ', 'trim|required');
 			$this->form_validation->set_rules('model', '', 'trim');
 			$this->form_validation->set_rules('buy_price', 'ราคาซื้อ', 'trim');
@@ -389,10 +389,10 @@ class admin extends Controller {
 				$query['last_modify'] =date("y/m/d H:i:s");
 				$query['create_date'] =date("y/m/d H:i:s");
 				
-				$this->db->insert("materials2",$query);
+				$this->db->insert("materials",$query);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				
-				redirect('admin/materials', 'location');
+				redirect('admin/materials2', 'location');
 			}
 		
 	
@@ -496,7 +496,43 @@ class admin extends Controller {
 			}
 		
 	}
-	
+	function maintain_add()
+	{
+			
+			$this->form_validation->set_rules('maintain_name',  'ชื่องานซ่อม', 'trim|required');
+			$this->form_validation->set_rules('remark',  '', 'trim');
+			$this->form_validation->set_rules('category_id',  'หมวด', 'trim|required');
+			
+			
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->template->load('admin/themes',"admin/maintain_add",null);
+			}
+			else
+			{ 	
+				$this->db->insert("maintain",$_POST);
+				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+				
+				redirect('admin/maintains', 'location');
+				
+			}
+	}
+	function maintains()
+	{
+		$header =
+		 array( 
+			  array("class"=>"left width200","name"=>"category_name","label"=>"ชื่อหมวด"),
+			  array("class"=>"left","name"=>"maintain_name","label"=>"งานซ่อม"),
+			  array("class"=>"left","name"=>"remark","label"=>"หมายเหตุ"),
+			  array("class"=>"center edit","name"=>"budget_id","label"=>"แก้ไข"),
+			  array("class"=>"center delete","name"=>"budget_id","label"=>"ลบ")
+	 			);
+		$rows = $this->db->query("select * from budgets")->result_array();
+		$data["header"] = $header; 
+		$data["rows"] = $rows;
+		$this->template->load('admin/themes',"admin/budget",$data);
+	}
 	function budgets()
 	{
 		$header =
