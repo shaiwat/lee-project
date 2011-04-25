@@ -53,10 +53,21 @@ function upfile(field)
     </div><!-- header -->
     
     <div id="main">
-    
+    <?php if(!isset($no_menu)){ ?>
       <div id="menu">
+      
        <?php $this->load->view("admin/navigation")  ?>
-      </div><!-- content -->
+      </div>
+      <?php }else{
+      ?>
+      <style>
+       #witti {
+   		 background: none;
+       }
+      </style>
+      <?php } ?>
+      <!-- content -->
+      
       <div id="content">
    
        <?php echo $contents; ?>

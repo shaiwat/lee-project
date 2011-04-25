@@ -47,7 +47,7 @@
             </ul>
           </li>
           
-            <li><a href="<?php echo site_url("admin/report"); ?>">รายงาน</a>
+            <li><a href="<?php echo site_url("report/index"); ?>">รายงาน</a>
          
           </li>
         </ul>  
