@@ -313,7 +313,7 @@ class admin extends Controller {
 	function material_view($id)
 	{
 		$data["contents"]=$this->p->material_view($id);
-		$this->load->view("admin/themes",$data);
+		$this->load->view("pupup_theme",$data);
 		
 	}
 	function material_filter()

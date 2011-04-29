@@ -63,11 +63,11 @@ function form_head($action,$label)
   	$data["label"] = $label;
   	$CI->load->view("form_head",$data);
 }
-function form_footer()
+function form_footer($submit_label ="บันทึก")
 {
 	$CI =& get_instance();	
-  	
-  	$CI->load->view("form_footer");
+  	$data["submit_label"] = $submit_label;
+  	$CI->load->view("form_footer",$data);
 }
 function select_field($name,$label,$rows,$label_value,$row,$cleaner = 0,$first_label="โปรดเลือก")
 {

@@ -41,7 +41,7 @@
           	</ul>
           </li>
           
-           <li><a href="<?php echo site_url("admin/maintain"); ?>">รายการงานชนิดซ่อม</a>
+           <li><a href="<?php echo site_url("admin/maintains"); ?>">รายการงานชนิดซ่อม</a>
           	<ul>
           		<li><a href="<?php echo site_url("admin/maintain_add"); ?>">เพิ่มชนิดงานซ่อมใหม่</a></li>
           		
