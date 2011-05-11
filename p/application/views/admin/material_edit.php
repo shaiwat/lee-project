@@ -2,7 +2,7 @@
 
 
 
-  <?php form_head("admin/materail_edit/".$row["material_id"],"เพิ่มครุภัณใหม่") ?>
+  <?php form_head("admin/materail_edit/".$row["material_id"],"แก้ไขครุภัณใหม่") ?>
           <?php text_field("name","ชื่อครุภัณฑ์",$row,0); ?>
           <?php text_field("code","รหัสครุภัณ์",$row,0); ?>
           <?php text_field("brand","ยี้ห้อ",$row,1); ?>
