@@ -48,7 +48,7 @@
       
           
           <style>
-          #content { padding-left: 10px;}
+          #content {}
           .form .field,.form .field select{
            width: 150px;
           }

@@ -5,7 +5,7 @@
          <div class="field">
           หมวดวัสดุครุภุณฑ์<br>
           <?php $cats = $this->db->query("select * from material_categories")->result_array();  ?>
-          <select style="float:left;width:200px;"  name="cat_id">
+          <select style="float:left;width:200px;"  name="category_id">
             <option value="0">All</option>
             <?php foreach($cats as $row){ ?>
             <option value="<?php echo $row['category_id'] ?>"><?php echo $row['category_name']; ?></option>
