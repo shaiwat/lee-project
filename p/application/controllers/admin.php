@@ -406,6 +406,44 @@ class admin extends Controller {
 		
 	
 	}
+	function material_edit2($id)
+	{
+			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+			$this->form_validation->set_rules('name',  'ชื่อ', 'trim|required');
+			
+			$this->form_validation->set_rules('category_id', 'หมวดสินค้า', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('budget_id', 'ชนิดงบประมาณ', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('company_id', 'บริษัท', 'trim|required|is_natural_no_zero');
+			$this->form_validation->set_rules('place_id', 'ชื่อสถานที่', 'trim|required|is_natural_no_zero');
+			
+			$this->form_validation->set_rules('brand', 'ยีห้อ', 'trim|required');
+			$this->form_validation->set_rules('model', '', 'trim');
+			$this->form_validation->set_rules('buy_price', 'ราคาซื้อ', 'trim');
+			$this->form_validation->set_rules('buy_date', 'วันที่ซื้อ', 'trim');
+			$this->form_validation->set_rules('detail', '', 'trim');
+			$this->form_validation->set_rules('thumbnail', '', 'trim');
+			$this->form_validation->set_rules('warranty', '', 'trim');
+			
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->db->where("material_id",$id);
+				$rows = $this->db->get("material_views")->result_array();
+				$data["row"] = $rows[0];
+				$this->template->load('admin/themes',"admin/material_edit2",$data);
+			}
+			else
+			{ 	
+				$query = $_POST;
+				
+				$query['last_modify'] =date("y/m/d H:i:s");
+				$query['create_date'] =date("y/m/d H:i:s");
+				
+				$this->db->update("materials",$query);
+				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
+				
+				redirect('admin/materials2', 'location');
+			}
+	}
 	function material_add()
 	{
 		
