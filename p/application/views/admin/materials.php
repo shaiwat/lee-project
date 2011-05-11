@@ -29,7 +29,7 @@
             <td><?php echo $row['name'] ?></td>
             <td><?php echo $row['category_name'] ?></td>
             <td><?php echo $row['buy_date']; ?></td>
-            <td><a href="<?php echo site_url("admin/material_edit/".$row['material_id']); ?>"><strong>edit</strong></a></td>
+            <td><a href="<?php echo site_url("admin/materail_edit/".$row['material_id']); ?>"><strong>edit</strong></a></td>
             
           </tr>
           <?php } ?>
