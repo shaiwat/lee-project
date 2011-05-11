@@ -1,7 +1,14 @@
       <h1>รายงานวัสดุครุภัณฑ์</h1>
 
 
-<?php $filter =  $this->session->userdata("report_filter"); ?>
+<?php $filter =  $this->session->userdata("report_filter");
+
+	if(!$filter)
+	{
+		$filter = null;
+		
+	}
+?>
   <?php form_head("report/report_filter","กรองข้อมูล") ?>
           
          
