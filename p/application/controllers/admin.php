@@ -312,8 +312,8 @@ class admin extends Controller {
 	}
 	function material_view($id)
 	{
-		$data["contents"]=$this->p->material_view($id);
-		$this->load->view("pupup_theme",$data);
+		$data["detail"]=$this->p->material_view($id);
+		$this->template->load("admin/themes","admin/m_detail",$data);
 		
 	}
 	function material_filter()
@@ -435,7 +435,7 @@ class admin extends Controller {
 				
 				$query['last_modify'] =date("y/m/d H:i:s");
 				$query['create_date'] =date("y/m/d H:i:s");
-				
+				$this->db->where("material_id",$id);
 				$this->db->update("materials",$query);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				
@@ -658,7 +658,7 @@ function maintain_delete($id)
 				}
 				else
 				{ 	
-					$this->db->insert("budgets",$_POST);
+					$this->db->update("budgets",$_POST);
 					$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
 					
 					redirect('admin/budgets', 'location');
@@ -667,7 +667,27 @@ function maintain_delete($id)
 	}
 	function budget_delete($id)
 	{
-		
+			$this->form_validation->set_message('required', 'กรุณาระบุ %s');
+			$this->form_validation->set_rules('budget_name',  'ชื่อชนิดงบประมาณ', 'trim');
+			
+			
+			
+			$this->db->where("budget_id",$id);
+			
+				if ($this->form_validation->run() == FALSE)
+				{
+					$rows = $this->db->get("budgets")->result_array();
+					$data["row"] = $rows[0];
+					$this->template->load('admin/themes',"admin/budget_delete",$data);
+				}
+				else
+				{ 	
+					$this->db->delete("budgets");
+					$this->user->set_message("","ลบเรียบร้อยแล้ว","success");
+					
+					redirect('admin/budgets', 'location');
+					
+				}
 	}
 	
 	function company()
@@ -797,8 +817,6 @@ function maintain_delete($id)
 			{ 	
 				
 			}
-			
-			
 			
 			if ( !$file = $this->upload->do_upload("file_field"))
 			{
