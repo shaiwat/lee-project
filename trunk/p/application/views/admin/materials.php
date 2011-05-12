@@ -26,7 +26,7 @@
           
           <tr >
             <td class="left"><?php echo get_thumbail($row) ?></td>
-             <td><?php echo $row['ref_code'] ?></td>
+             <td><?php echo $row['ref_code']; ?></td>
             <td><?php echo $row['code'] ?></td>
             <td><?php echo $row['name'] ?></td>
             <td><?php echo $row['category_name'] ?></td>
