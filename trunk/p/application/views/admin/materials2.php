@@ -9,7 +9,7 @@
 ?>
 <h1>รายการวัสดุ</h1>
  <?php echo $this->user->messages(); ?>
-<?php $this->load->view("admin/material_filter"); ?>
+<?php $this->load->view("admin/material_filter2"); ?>
 <table id="list">
           <tbody><tr class=" odd">
             <th style="width: 50px;" >รูป</th>

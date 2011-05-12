@@ -3,7 +3,7 @@
 
 
   <?php form_head("admin/material_add2","เพิ่มวัสดุใหม่") ?>
-          <?php text_field("name","ชื่อบริษัท",null,0); ?>
+          <?php text_field("name","ชื่อวัสดุ",null,0); ?>
           
           <?php text_field("brand","ยี้ห้อ",null,1); ?>
           <?php text_field("buy_date","วันที่ซื้อ",null,0,"date"); ?>
