@@ -26,7 +26,7 @@
           <tr >
             <td class="left"><?php echo get_thumbail($row) ?></td>
             <td><?php echo $row['code'] ?></td>
-            <td><?php echo $row['name'] ?></td>
+            <td><a href="<?php echo site_url("admin/material_view/".$row["material_id"]); ?>"><?php echo $row['name'] ?></a></td>
             <td><?php echo $row['category_name'] ?></td>
             <td><?php echo $row['buy_date']; ?></td>
             <td><a href="<?php echo site_url("admin/material_edit/".$row['material_id']); ?>"><strong>edit</strong></a></td>
