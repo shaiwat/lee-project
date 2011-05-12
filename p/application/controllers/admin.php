@@ -397,7 +397,7 @@ class admin extends Controller {
 				$query['type_id'] = 1;
 				$query['last_modify'] =date("y/m/d H:i:s");
 				$query['create_date'] =date("y/m/d H:i:s");
-				
+				$query["ref_code"] = $this->p->getcode();
 				$this->db->insert("materials",$query);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				
@@ -473,6 +473,7 @@ class admin extends Controller {
 				$query['type_id'] = 2;
 				$query['last_modify'] =date("y/m/d H:i:s");
 				$query['create_date'] =date("y/m/d H:i:s");
+				$query["ref_code"] = $this->p->getcode();
 				$this->db->insert("materials",$query);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				redirect('admin/materials', 'location');
@@ -983,6 +984,15 @@ function maintain_delete($id)
 				redirect('admin/pages', 'location');
 				
 			}
+			
+			
+			
+	}
+	function code()
+	{
+			
+				print $this->p->getcode();
+			
 	}
 }
 
