@@ -340,33 +340,31 @@ class admin extends Controller {
 		$condition ="";
 		if($filter["category_id"])
 		{
-		$condition = " and p.category_id = ".$filter["category_id"];
+		$condition = " and category_id = ".$filter["category_id"];
 		
 		}
-		$sql = "select * from materials m left join material_categories c on m.category_id = c.category_id where type_id =2 "; 
+		$sql = "select * from material_views where type_id =2 $condition "; 
 		$base = "admin/materials";
 		
 		$this->_page_query($sql,$base,"admin/materials",$offset,array(),true,50);
 		
-		//$data["materials"]= $this->db->query("select * from materials p left join material_categories c on c.category_id = p.category_id ")->result_array();
-		//$this->template->load('admin/themes',"admin/materials",$data);
+		
 	}
 	function materials2($offset=0)
 		{
-			/*$filter = $this->session->userdata("filter");
+			$filter = $this->session->userdata("filter");
 			$condition ="";
 			if($filter["category_id"])
 			{
-			$condition = " and p.category_id = ".$filter["category_id"];
+			$condition = " and category_id = ".$filter["category_id"];
 			
-			}*/
-			$sql = "select * from materials m left join material_categories c on m.category_id = c.category_id 	where type_id = 1 "; 
-			$base = "admin/materials";
+			}
+			$sql = "select * from material_views m 	where type_id = 1 $condition "; 
+			$base = "admin/materials2";
 			
 			$this->_page_query($sql,$base,"admin/materials2",$offset,array(),true,50);
 			
-			//$data["materials"]= $this->db->query("select * from materials p left join material_categories c on c.category_id = p.category_id ")->result_array();
-			//$this->template->load('admin/themes',"admin/materials",$data);
+	
 		}
 	function material_add2()
 	{
