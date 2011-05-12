@@ -118,7 +118,19 @@
     	//$this->db->query()->result_array();
     	
 	}
+	function getcode()
+	{
+		
+		
+		
+		$refcode = $this->db->query("select * from ref_code where ref_code = 'm'")->result_array();
+		
+		
+		if($refcode)
+		{	
+			$this->db->query("update ref_code set ref_no = ref_no+1 where ref_code='m'");
+			return date("y").str_pad($refcode[0]['ref_no'],6,0,STR_PAD_LEFT);
+		}
 	
-	
-	
+	}
 }
