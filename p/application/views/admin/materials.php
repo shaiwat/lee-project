@@ -13,6 +13,7 @@
 <table id="list">
           <tbody><tr class=" odd">
             <th style="width: 50px;" >รูป</th>
+            <th>เลขที่อ้างอิง</th>
             <th>เลขที่ครุภัณฑ์</th>
              <th>ชื่อ</th>
              
@@ -25,6 +26,7 @@
           
           <tr >
             <td class="left"><?php echo get_thumbail($row) ?></td>
+             <td><?php echo $row['ref_code'] ?></td>
             <td><?php echo $row['code'] ?></td>
             <td><?php echo $row['name'] ?></td>
             <td><?php echo $row['category_name'] ?></td>
