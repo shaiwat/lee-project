@@ -5,8 +5,8 @@
         <fieldset>
          <input type="hidden" name="cat_id" value="<?php echo $user[0]["user_id"] ?>" />
           <legend>ยืนยันการลบผู้ใช้งาน</legend>
-          <p class="submit"><input type="submit" value="ลบ"><button onclick="window.location='<?php echo site_url("admin/user_edit/".$user[0]['user_id']); ?>'" >ยกเลิก</button></p>
+          <p >  <input class="submit" type="submit" value="ลบ"></p>
 		  </fieldset>
        
   </form>
-   
+   <button onclick="window.location='<?php echo site_url("admin/user_edit/".$user[0]['user_id']); ?>'" >ยกเลิก</button>
