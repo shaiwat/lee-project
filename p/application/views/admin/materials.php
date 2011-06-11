@@ -19,6 +19,7 @@
              
             <th>หมวด</th>
              <th>วันที่ซื้อมา</th>
+               <th>ดูรายละเอีียด</th>
             <th>แก้ไขข้อมูล</th>
            
           </tr>
@@ -26,11 +27,12 @@
           
           <tr >
             <td class="left"><?php echo get_thumbail($row) ?></td>
-             <td><?php echo $row['ref_code']; ?></td>
+             <td ><a href="<?php echo site_url("admin/material_view/".$row["material_id"]); ?>" ><?php echo $row['ref_code']; ?></a></td>
             <td><?php echo $row['code'] ?></td>
             <td><?php echo $row['name'] ?></td>
             <td><?php echo $row['category_name'] ?></td>
             <td><?php echo $row['buy_date']; ?></td>
+            <td><a href="<?php echo site_url("admin/material_view/".$row["material_id"]); ?>" ><img src="include/images/edit.png" /></a></td>
             <td><a href="<?php echo site_url("admin/materail_edit/".$row['material_id']); ?>"><strong>edit</strong></a></td>
             
           </tr>
