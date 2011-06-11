@@ -12,7 +12,7 @@ class admin extends Controller {
 		}
 		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
 		$this->form_validation->set_message('is_natural_no_zero', 'กรุณาระบุ %s');
-		$this->output->enable_profiler(TRUE);
+		//$this->output->enable_profiler(TRUE);
 	}
 	function csv()
 	{
@@ -1009,6 +1009,96 @@ function maintain_delete($id)
 			
 				print $this->p->getcode();
 			
+	}
+    function user_roles()
+	{
+
+		$this->template->load('admin/themes',"admin/user_roles",null);
+	}
+	function  user_role_add()
+	{
+        $this->form_validation->set_rules('role_name',  'ชื่อกลุ่มผู้ใช้งาน', 'trim|required');
+
+        $this->form_validation->set_rules('controllers[]',  'Action', 'trim|required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $this->template->load('admin/themes',"admin/user_role_add",null);
+        }
+        else
+        {
+
+
+             $values = array();
+             $values["role_name"] = $_POST["role_name"];
+
+             $values["controller_access"]  = implode(",", $_POST["controllers"]);
+
+
+
+        $this->db->insert("roles",$values);
+        $this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+
+        redirect('admin/user_roles', 'location');
+
+        }
+	}
+	function user_role_edit($id)
+	{
+        $this->form_validation->set_rules('role_name',  'ชื่อกลุ่มผู้ใช้งาน', 'trim|required');
+
+        $this->form_validation->set_rules('controllers[]',  'Action', 'trim|required');
+
+        $this->db->where("role_id",$id);
+        if ($this->form_validation->run() == FALSE)
+        {
+            $rows = $this->db->get("roles")->result_array();
+            $data["role"] = $rows[0];
+            $this->template->load('admin/themes',"admin/user_role_edit",$data);
+        }
+        else
+        {
+
+
+         $values = array();
+         $values["role_name"] = $_POST["role_name"];
+
+         $values["controller_access"]  = implode(",", $_POST["controllers"]);
+       
+
+			$this->db->update("roles",$values);
+			$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+
+			redirect('admin/user_roles', 'location');
+
+			}
+	}
+	function role_delete($id)
+	{
+
+        $this->form_validation->set_rules('role_id',  '', 'trim|required');
+
+
+
+        $this->db->where("role_id",$id);
+        if ($this->form_validation->run() == FALSE)
+        {
+            $rows = $this->db->get("roles")->result_array();
+            $data["role"] = $rows[0];
+            $this->template->load('admin/themes',"admin/user_role_delete",$data);
+        }
+        else
+        {
+
+
+
+
+			$this->db->delete("roles");
+			$this->user->set_message("","ลบเรียบร้อยแล้ว","success");
+
+			redirect('admin/user_roles', 'location');
+
+			}
 	}
 }
 
