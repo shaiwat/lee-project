@@ -11,7 +11,7 @@
 	
 	function get()
 	{
-		$sql ="select  * from users where user_id=".$this->get_user_id();
+		$sql ="select  * from users inner join roles on users.role_id =  roles.role_id where  users.user_id=".$this->get_user_id();
 		$users = $this->db->query($sql)->result_array();
 		return $users[0];
 	}
@@ -21,13 +21,14 @@
 		return $user['user_id'];
 	}
 	
-	
-	function get_permission()
+	function get_project_access()
 	{
-		
-		
+			$user = $this->get();
+			
+			return $user["project_access"];
 	}
     
+	
     
     function is_login()
     {
@@ -64,6 +65,33 @@
 			$this->session->unset_userdata('messages');
 		}
 		
+	}
+	function get_protect_controllers()
+	{
+		
+		return $rows;
+	}
+	function protection()
+	{
+	
+		$user = $this->get();
+		$this->db->where("role_id",$user["role_id"]);
+		$roles = $this->db->get("roles")->result_array();
+		
+		$rows = $this->db->query("select * from controllers where c_id  not in (".$roles[0]["controller_access"].")")->result_array();
+		
+		foreach($rows as $row)
+		{
+			
+				if($this->current_controller()==$row["controller"])
+				{
+					redirect('login/access_denine', 'location'); 
+					return;
+				}
+			
+			
+		
+		}
 	}
     
 }
