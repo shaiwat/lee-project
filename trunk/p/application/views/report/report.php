@@ -40,7 +40,7 @@
             
             <td><span><?php echo $row["year"] ?></span></td>
               <td class="left"><span><?php echo get_thumbail($row) ?></span></td>
-          <td><img onclick="popup('<?php echo site_url("admin/material_view/".$row["material_id"]); ?>');" src="<?php echo base_url() ?>include/images/edit.png" /></td>
+          <td><a href="<?php echo site_url("admin/material_view/".$row["material_id"]); ?>" ><img src="include/images/edit.png" /></a></td></td>
           </tr>
           <?php } ?>
         </tbody></table>

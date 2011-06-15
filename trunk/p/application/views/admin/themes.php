@@ -55,7 +55,7 @@ function upfile(field)
     	<?php if($this->user->is_login()){
     		$user = $this->user->get();
     	?>
-    	      <p class="userinfo"><strong><?php echo $user['firstname']; ?>  <?php echo $user["lastname"]; ?></strong> | <!--  <a href="#">My account</a> |--> <a href="<?php echo site_url("login/logout"); ?>">Logout!</a></p>
+    	      <p class="userinfo"><strong><?php echo $user['firstname']; ?>  <?php echo $user["lastname"]; ?></strong> | <!--  <a href="#">My account</a> |--> <a href="<?php echo site_url("login/logout"); ?>">ออกจากระบบ!</a></p>
     	
     	<?php }
     	
@@ -81,7 +81,7 @@ function upfile(field)
     </div><!-- footer -->
   
   </div><!-- witti -->
-t>
+
 
 
 </body>
