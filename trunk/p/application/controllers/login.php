@@ -60,6 +60,10 @@ class login extends Controller {
 		  	return false;
 		 }
 		}
+    function access_denine()
+        {
+            $this->template->load('admin/themes',"access_denine",null);
+        }
 
 }
 
