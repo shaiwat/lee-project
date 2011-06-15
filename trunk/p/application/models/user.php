@@ -41,6 +41,15 @@
 		 	return false;
 		}
     }
+    function back_action()
+    {
+    	$last_action  = $this->session->userdata("last_action");	
+    	redirect($last_action, 'location');
+    }
+    function save_action()
+    {
+    	$this->session->set_userdata("last_action",$this->router->uri->uri_string);
+    }
     function current_controller()
     {
     	$controller =  $this->router->class."/".$this->router->method ;
