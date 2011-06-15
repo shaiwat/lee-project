@@ -91,7 +91,7 @@
     	array( "field"=>"การรับประกัน:","detail"=>$rows[0]["warranty"] ),
     	array( "field"=>"ซื่อจากบริษัท:","detail"=>$rows[0]["company_name"]." ".$rows[0]["address"] ." ".$rows[0]["tel"] ),
 		array( "field"=>"รูป:","detail"=>$this->get_thumbail($rows[0]) ),
-		array( "field"=>"แจ้งซ่อม:","detail"=>"<a href=".site_url("admin/maintain_add").">แจ้งซ่อม</a>" ),
+		array( "field"=>"แจ้งซ่อม:","detail"=>"" ),
 		array( "field"=>"ประวัติงานซ่อม:","detail"=>$this->maintain_history($id["material_id"]) )
     	
     	
