@@ -19,6 +19,7 @@
              
             <th>หมวด</th>
              <th>วันที่ซื้อมา</th>
+             <th>บันทึกงานซ่อมใหม่</th>
                <th>ดูรายละเอีียด</th>
             <th>แก้ไขข้อมูล</th>
            
@@ -33,10 +34,19 @@
             <td><?php echo $row['name'] ?></td>
             <td><?php echo $row['category_name'] ?></td>
             <td><?php echo $row['buy_date']; ?></td>
-            <td><a href="<?php echo site_url("admin/material_view/".$row["material_id"]); ?>" ><img src="include/images/edit.png" /></a></td>
+              <td class="tc" ><a href="<?php echo site_url("admin/m_maintain_add/".$row["material_id"]); ?>" ><img style="width: 25px; height:25px;" src="images/maintenance.png" /></a></td>
+            <td class="tc"><a href="<?php echo site_url("admin/material_view/".$row["material_id"]); ?>" ><img src="include/images/edit.png" /></a></td>
             <td class="tc"><a href="<?php echo site_url("admin/materail_edit/".$row['material_id']); ?>"><img src="images/edit-icon.png" /></a></td>
             
           </tr>
           <?php } ?>
         </tbody></table>
+  <style>
   
+  #content table.list td.tc
+  {
+  	text-align: center;
+  
+  }
+  
+  </style>
