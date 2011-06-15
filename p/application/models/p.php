@@ -16,6 +16,7 @@
 			}
 		
 	}
+	
 	function maintain_history($id)
 	{
 		$header =
