@@ -44,9 +44,10 @@
 		 $rows =  $this->db->query("select year  from budgets group by year")->result_array();
 		 select_field("year","ปีการศีกษา",$rows,"year",$filter,0,"ทั้งหมด"); 
 		 ?>
-		 <input style="margin-top:28px;padding:2px 10px;height:30px;"  type="submit" value="ดูรายงาน">
+		  <div class="cleaner"></div>
+		 <input style="margin-top:28px;padding:2px 10px;height:30px;"  type="submit" value="filter" class="submit">
 			 
- <div class="cleaner"></div>
+
  </fieldset>
       
  </form>
