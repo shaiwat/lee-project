@@ -10,10 +10,19 @@ class admin extends Controller {
 		{
 			redirect('login', 'location'); 
 		}
+        $this->user->protection();
 		$this->form_validation->set_message('required', 'กรุณาระบุ %s');
 		$this->form_validation->set_message('is_natural_no_zero', 'กรุณาระบุ %s');
 		//$this->output->enable_profiler(TRUE);
 	}
+    function search()
+    {
+        	$this->template->load('admin/themes',"admin/search");
+    }
+    function material_search()
+    {
+        
+    }
 	function csv()
 	{
 		$this->load->dbutil();
@@ -71,7 +80,7 @@ class admin extends Controller {
 	{
 		$header =
 		 array( 
-			  array("class"=>"left","name"=>"place_name","label"=>"ชื่อห้อง/สถานที่"),
+			  array("class"=>"center","name"=>"place_name","label"=>"ชื่อห้อง/สถานที่"),
 			 
 			  array("class"=>"center edit","name"=>"place_id","label"=>"แก้ไข"),
 			  array("class"=>"center delete","name"=>"place_id","label"=>"ลบ")
@@ -251,6 +260,32 @@ class admin extends Controller {
 			}
 			
 	}
+    function pass_edit2()
+	{
+	        $this->form_validation->set_message('required', 'กรุณาระบุ %s');
+
+			$this->form_validation->set_rules('password', '', 'trim|required');
+
+
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->db->where("user_id",$this->user->get_user_id());
+				$data["user"] = $this->db->get("users")->result_array();
+				$this->template->load('admin/themes',"admin/pass_edit2",$data);
+			}
+			else
+			{
+				$values = $_POST;
+				$values["password"] = md5($values["password"]);
+				$this->db->where("user_id",$this->user->get_user_id());
+				$this->db->update("users",$values);
+				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+
+				redirect('admin/pass_edit2', 'location');
+
+			}
+
+	}
 	function user_edit($id)
 	{
 			$this->form_validation->set_rules('username',  'ชื่อผู้ใช้งาน', 'trim|required');
@@ -278,6 +313,35 @@ class admin extends Controller {
 			
 				redirect('admin/users', 'location');
 				
+			}
+	}
+    function user_edit2()
+	{
+			//$this->form_validation->set_rules('username',  'ชื่อผู้ใช้งาน', 'trim|required');
+			//$this->form_validation->set_rules('password', 'รหัสผ่าน', 'trim|required');
+			$this->form_validation->set_rules('firstname', 'ชื่อ', 'trim|required');
+			$this->form_validation->set_rules('lastname', 'นามสกุล', 'trim|required');
+
+			$this->form_validation->set_rules('position', 'ตำแหน่ง', 'trim');
+			$this->form_validation->set_rules('email', 'อีเมล์', 'trim|required');
+			$this->form_validation->set_rules('tel', '', 'trim');
+			//$this->form_validation->set_rules('role_id', 'ระดับผู้ใช้งาน', 'trim|required');
+			$this->db->where("user_id",$this->user->get_user_id());
+			if ($this->form_validation->run() == FALSE)
+			{
+                $rows =  $this->db->get("users")->result_array();
+				$data["row"] =$rows[0];
+				$this->template->load('admin/themes',"admin/user_edit2",$data);
+			}
+			else
+			{
+				$values = $_POST;
+
+				$this->db->update("users",$values);
+				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");
+
+				redirect('admin/user_edit2', 'location');
+
 			}
 	}
 	function category_delete($id)
@@ -595,9 +659,9 @@ function maintain_delete($id)
 	{
 		$header =
 		 array( 
-			  array("class"=>"left width200","name"=>"category_name","label"=>"ชื่อหมวด"),
-			  array("class"=>"left","name"=>"maintain_name","label"=>"งานซ่อม"),
-			  array("class"=>"left","name"=>"remark","label"=>"หมายเหตุ"),
+			  array("class"=>"center width200","name"=>"category_name","label"=>"ชื่อหมวด"),
+			  array("class"=>"center","name"=>"maintain_name","label"=>"งานซ่อม"),
+			  array("class"=>"center","name"=>"remark","label"=>"หมายเหตุ"),
 			  array("class"=>"center edit","name"=>"maintain_id","label"=>"แก้ไข"),
 			  array("class"=>"center delete","name"=>"maintain_id","label"=>"ลบ")
 	 			);
@@ -757,9 +821,29 @@ function maintain_delete($id)
 			
 		}
 	}
-	function compay_delete($id)
+	function company_delete($id)
 	{
-		
+
+		$this->form_validation->set_rules('company_id',  '', 'trim');
+
+
+		$this->db->where("company_id",$id);
+		if ($this->form_validation->run() == FALSE)
+		{
+			$rows = $this->db->get("company")->result_array();
+			$data["row"] = $rows[0];
+			$this->template->load('admin/themes',"admin/company_delete",$data);
+		}
+		else
+		{
+
+			$this->db->delete("company",$_POST);
+
+			$this->user->set_message("","ลบเรียบร้อยแล้ว","success");
+
+			redirect('admin/company', 'location');
+
+		}
 	}
 	function file_filter()
 	{
