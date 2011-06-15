@@ -15,9 +15,71 @@ class admin extends Controller {
 		$this->form_validation->set_message('is_natural_no_zero', 'กรุณาระบุ %s');
 		//$this->output->enable_profiler(TRUE);
 	}
-    function search()
+    function search($id=0)
     {
-        	$this->template->load('admin/themes',"admin/search");
+
+
+    	if(!$id)
+    	{
+    		$this->form_validation->set_rules('ref_code',  'เลขที่อ้างอิง/เลขที่ครุถัณฑ์: ', 'trim|required|callback_ref_code_check');
+			if ($this->form_validation->run() == FALSE)
+			{
+				$this->template->load('admin/themes',"admin/search",null);
+			}
+			else
+			{
+
+                $ref_code = $_POST["ref_code"];
+                $sql = "select * from material_views where ref_code = '$ref_code'";
+
+               	$code = $_POST["ref_code"];
+               	
+           		$sql = "select * from material_views where ref_code = '$code' or code = '$code'";
+            	$rows  =  $this->db->query($sql)->result_array();
+                $data["rows"] = $rows;
+
+				redirect('admin/search/'.$rows[0]["material_id"], 'location');
+
+
+               
+			}
+    	}else 
+    	{
+    			
+    			$this->db->where("material_id",$id);
+    			$rows = $this->db->get("material_views")->result_array();
+                $data["rows"] = $rows;
+				$this->user->save_action();
+				$this->template->load('admin/themes',"admin/search_result",$data);
+    		
+    	}
+
+
+
+    }
+    function ref_code_check($str)
+    {
+        if ($str == '')
+		{
+
+			return true;
+		}
+		else
+		{
+			$this->form_validation->set_message('ref_code_check', 'เลขที่อ้างอิง/เลขที่ครุถัณฑ์: ');
+            $code = $str;
+			$sql = "select * from materials where ref_code = '$code' or code = '$code'";
+            $rows  =  $this->db->query($sql)->result_array();
+            if(count($rows))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+		}
     }
     function material_search()
     {
@@ -503,7 +565,7 @@ class admin extends Controller {
 				$this->db->update("materials",$query);
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				
-				redirect('admin/materials2', 'location');
+				$this->user->back_action();
 			}
 	}
 	function material_add()
@@ -581,7 +643,7 @@ class admin extends Controller {
 				$this->user->set_message("","บันทึกเรียบร้อยแล้ว","success");	
 				
 				//echo $this->db->truncate(); 
-				redirect('admin/materials', 'location');
+				$this->user->back_action();
 			}
 		
 	}
