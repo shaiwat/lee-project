@@ -41,6 +41,15 @@
 		 	return false;
 		}
     }
+    function get_h1()
+    {
+    	$this->db->where("controller",$this->current_controller());
+		$rows = $this->db->get("controllers")->result_array();
+		if(count($rows))
+		{
+			echo "<h1>".$rows[0]["detail"]."</h1>";
+		}
+    }
     function back_action()
     {
     	$last_action  = $this->session->userdata("last_action");	
