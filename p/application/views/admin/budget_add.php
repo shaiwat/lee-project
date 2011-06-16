@@ -1,8 +1,4 @@
 
-        <h1>ชนิดงบประมาณ</h1>
-
-   
-    
 
 		  <?php form_head("admin/budget_add/","เพิ่มชนิดงบประมาณใหม่") ?>
           <?php text_field("budget_name","ชื่อ",null,1); ?>
